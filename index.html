@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlocentraAI - MVP Simulation</title>
+    <title>BlocentraAI - Investor Demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #1a3a6c;
-            --secondary: #2a5ca0;
-            --accent: #00c8a0;
-            --light: #f5f9ff;
-            --dark: #0a1a30;
+            --primary: #0c1e3d;
+            --secondary: #1d3d78;
+            --accent: #00d9b0;
+            --accent-dark: #00b897;
+            --light: #f0f8ff;
+            --dark: #091428;
             --success: #4caf50;
             --warning: #ff9800;
             --danger: #f44336;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
         }
         
         * {
@@ -25,10 +29,11 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0a1a30 0%, #1a3a6c 100%);
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
             color: var(--light);
             min-height: 100vh;
             padding-bottom: 2rem;
+            overflow-x: hidden;
         }
         
         .container {
@@ -42,9 +47,10 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 0;
-            background: rgba(10, 26, 48, 0.95);
+            background: rgba(12, 30, 61, 0.97);
             z-index: 100;
             backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
         
         .header-content {
@@ -83,149 +89,233 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
         }
         
-        .nav-links a:hover {
-            color: var(--accent);
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
         }
         
         .hero {
-            padding: 5rem 0;
+            padding: 6rem 0 4rem;
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 217, 176, 0.15) 0%, rgba(0, 217, 176, 0) 70%);
+            z-index: -1;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            background: linear-gradient(to right, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .hero p {
-            font-size: 1.25rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            opacity: 0.85;
             margin-bottom: 2rem;
             line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .tagline {
             color: var(--accent);
             font-weight: 600;
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
         
         .cta-button {
-            background: var(--accent);
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
             color: var(--dark);
             border: none;
-            padding: 12px 30px;
+            padding: 14px 36px;
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 200, 160, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 217, 176, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.4s;
+        }
+        
+        .cta-button:hover:after {
+            transform: translateX(0);
         }
         
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 200, 160, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 217, 176, 0.4);
         }
         
         .section-title {
             text-align: center;
-            margin: 4rem 0 2rem;
-            font-size: 2.2rem;
+            margin: 5rem 0 3rem;
+            font-size: 2.5rem;
             position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
         .section-title:after {
             content: '';
             display: block;
-            width: 60px;
+            width: 80px;
             height: 4px;
             background: var(--accent);
-            margin: 10px auto;
+            margin: 15px auto;
             border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            line-height: 1.6;
         }
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin: 4rem 0;
         }
         
         .product-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s, box-shadow 0.4s;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(0, 217, 176, 0.1), transparent 70%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
         
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(0, 200, 160, 0.3);
+            transform: translateY(-12px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+            border-color: rgba(0, 217, 176, 0.3);
+        }
+        
+        .product-card:hover:before {
+            opacity: 1;
         }
         
         .card-header {
-            padding: 1.5rem;
-            background: rgba(0, 200, 160, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.8rem;
+            background: rgba(0, 217, 176, 0.08);
+            border-bottom: 1px solid var(--card-border);
         }
         
         .card-icon {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
         
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
         }
         
         .card-subtitle {
             opacity: 0.8;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
         
         .card-body {
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
         
         .card-features {
             list-style: none;
-            margin: 1rem 0;
+            margin: 1.2rem 0;
         }
         
         .card-features li {
-            padding: 8px 0;
+            padding: 10px 0;
             display: flex;
             align-items: flex-start;
+            font-size: 1.05rem;
         }
         
         .card-features li:before {
             content: '✓';
             color: var(--accent);
-            margin-right: 10px;
+            margin-right: 12px;
             font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .status-badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         
         .status-active {
@@ -244,29 +334,48 @@
         }
         
         .simulation-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 4rem 0;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .simulation-container:before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 217, 176, 0.1) 0%, rgba(0, 217, 176, 0) 70%);
+            z-index: 1;
         }
         
         .simulation-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            z-index: 2;
         }
         
         .simulation-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--accent);
+            font-weight: 600;
         }
         
         .simulation-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 2.5rem;
+            position: relative;
+            z-index: 2;
         }
         
         @media (max-width: 768px) {
@@ -276,151 +385,435 @@
         }
         
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
         
         .input-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             font-weight: 500;
+            font-size: 1.1rem;
         }
         
         .input-group input, .input-group select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 18px;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
             color: white;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            transition: all 0.3s;
         }
         
-        .input-group input:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 217, 176, 0.2);
         }
         
         .result-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.8rem;
             height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .result-title {
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
         
         .risk-meter {
-            height: 20px;
+            height: 24px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 1.5rem 0;
+            border-radius: 12px;
+            margin: 1.8rem 0;
             overflow: hidden;
             position: relative;
         }
         
         .risk-level {
             height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s;
+            border-radius: 12px;
+            transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
         
         .risk-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 5px;
-            font-size: 0.8rem;
+            margin-top: 8px;
+            font-size: 0.9rem;
             opacity: 0.7;
         }
         
         .metric {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
         }
         
         .metric-value {
             font-weight: 600;
         }
         
+        .hybrid-demo {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 4rem 0;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hybrid-demo:before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 217, 176, 0.1) 0%, rgba(0, 217, 176, 0) 70%);
+            z-index: 1;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .demo-title {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .demo-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .demo-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 4rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .demo-steps:before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            width: 20%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 217, 176, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 2px solid var(--accent);
+            font-size: 2.5rem;
+            color: var(--accent);
+            transition: all 0.4s;
+        }
+        
+        .step.active .step-icon {
+            background: rgba(0, 217, 176, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 217, 176, 0.3);
+        }
+        
+        .step-number {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: var(--dark);
+            border-radius: 50%;
+            line-height: 40px;
+            position: absolute;
+            top: -15px;
+            right: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .step-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .demo-visual {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .demo-chart {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .demo-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .demo-btn.primary {
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .demo-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 217, 176, 0.3);
+        }
+        
         .roadmap {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin: 4rem 0;
         }
         
         .roadmap-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--accent);
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 5px solid var(--accent);
+            transition: transform 0.4s;
+        }
+        
+        .roadmap-item:hover {
+            transform: translateY(-8px);
         }
         
         .roadmap-phase {
             color: var(--accent);
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .roadmap-title {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
         }
         
         .roadmap-features {
             list-style: none;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
         }
         
         .roadmap-features li {
-            padding: 5px 0;
+            padding: 8px 0;
             display: flex;
+            font-size: 1.05rem;
         }
         
         .roadmap-features li:before {
             content: '•';
             color: var(--accent);
-            margin-right: 10px;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-logo span {
-            color: var(--accent);
+            margin-right: 12px;
+            font-size: 1.5rem;
+            line-height: 1;
         }
         
         .contact-info {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 1.5rem 0;
+            gap: 2.5rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
         }
         
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .contact-icon {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-tagline {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.8;
         }
         
         .copyright {
             opacity: 0.7;
             margin-top: 2rem;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(20px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                gap: 1.2rem;
+            }
+            
+            .demo-steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .step {
+                width: 100%;
+            }
+            
+            .demo-steps:before {
+                display: none;
+            }
+            
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-circle" style="width: 500px; height: 500px; top: 10%; left: 5%; animation: float 12s infinite ease-in-out;"></div>
+        <div class="bg-circle" style="width: 300px; height: 300px; top: 60%; left: 80%; animation: float 15s infinite ease-in-out;"></div>
+        <div class="bg-circle" style="width: 400px; height: 400px; top: 30%; left: 70%; animation: float 18s infinite ease-in-out;"></div>
+    </div>
+    
     <header>
         <div class="container">
             <div class="header-content">
@@ -428,9 +821,14 @@
                     <i class="fas fa-shield-alt logo-icon"></i>
                     <div class="logo-text">Bloc<span>entra</span>AI</div>
                 </div>
+
+
+
+                
                 <div class="nav-links">
                     <a href="#products">Products</a>
-                    <a href="#simulation">Demo</a>
+                    <a href="#simulation">Risk Analysis</a>
+                    <a href="#hybrid">Hybrid Model</a>
                     <a href="#roadmap">Roadmap</a>
                     <a href="#contact">Contact</a>
                 </div>
@@ -440,16 +838,17 @@
 
     <section class="hero">
         <div class="container">
-            <div class="tagline">AI-Powered Bitcoin Protection</div>
-            <h1>Secure Bitcoin with Intelligent Risk Infrastructure</h1>
-            <p>BlocentraAI provides AI-native protection, risk intelligence, and capital activation for Bitcoin holders worldwide. Our trustless platform makes Bitcoin safer, insurable, and financially productive.</p>
-            <button class="cta-button">Request Demo</button>
+            <div class="tagline">AI-Powered Bitcoin Protection & Yield</div>
+            <h1>Unlock the Full Potential of Your Bitcoin</h1>
+            <p>BlocentraAI provides institutional-grade security, AI-driven risk intelligence, and capital activation tools for Bitcoin holders worldwide. Our hybrid model transforms idle BTC into protected, productive assets.</p>
+            <button class="cta-button">Request Investor Deck</button>
         </div>
     </section>
 
     <section id="products">
         <div class="container">
             <h2 class="section-title">Core Products</h2>
+            <p class="section-subtitle">Our comprehensive suite of Bitcoin protection and financialization tools</p>
             <div class="products-grid">
                 <!-- Product 1 -->
                 <div class="product-card">
@@ -576,40 +975,41 @@
 
     <section id="simulation">
         <div class="container">
-            <h2 class="section-title">Risk Simulation Demo</h2>
+            <h2 class="section-title">Risk Intelligence Simulation</h2>
+            <p class="section-subtitle">Experience our AI-powered risk assessment in action</p>
             <div class="simulation-container">
                 <div class="simulation-header">
-                    <h3 class="simulation-title">Bitcoin Wallet Risk Assessment</h3>
-                    <div class="status-badge status-active">Live Simulation</div>
+                    <h3 class="simulation-title">Bitcoin Wallet Protection Analysis</h3>
+                    <div class="status-badge status-active">Live Demo</div>
                 </div>
                 
                 <div class="simulation-content">
                     <div class="input-section">
                         <div class="input-group">
-                            <label for="walletAddress">Bitcoin Wallet Address</label>
-                            <input type="text" id="walletAddress" placeholder="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq">
+                            <label for="walletAddress"><i class="fas fa-wallet"></i> Bitcoin Wallet Address</label>
+                            <input type="text" id="walletAddress" placeholder="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq" value="bc1q9zd8fj7c7hq...">
                         </div>
                         
                         <div class="input-group">
-                            <label for="btcAmount">BTC Amount</label>
-                            <input type="number" id="btcAmount" placeholder="1.5" min="0.001" step="0.001">
+                            <label for="btcAmount"><i class="fab fa-bitcoin"></i> BTC Amount</label>
+                            <input type="number" id="btcAmount" placeholder="1.5" min="0.001" step="0.001" value="2.75">
                         </div>
                         
                         <div class="input-group">
-                            <label for="walletType">Wallet Type</label>
+                            <label for="walletType"><i class="fas fa-lock"></i> Wallet Type</label>
                             <select id="walletType">
                                 <option value="cold">Cold Storage</option>
-                                <option value="hot">Hot Wallet</option>
+                                <option value="hot" selected>Hot Wallet</option>
                                 <option value="multisig">Multi-signature</option>
                                 <option value="custodial">Custodial</option>
                             </select>
                         </div>
                         
                         <div class="input-group">
-                            <label for="usagePattern">Usage Pattern</label>
+                            <label for="usagePattern"><i class="fas fa-chart-line"></i> Usage Pattern</label>
                             <select id="usagePattern">
                                 <option value="hodl">Long-term holding</option>
-                                <option value="active">Regular transactions</option>
+                                <option value="active" selected>Regular transactions</option>
                                 <option value="defi">BTCFi participation</option>
                                 <option value="exchange">Exchange trading</option>
                             </select>
@@ -622,7 +1022,7 @@
                         <h3 class="result-title">Risk Assessment Report</h3>
                         <div class="metric">
                             <span>Wallet Trust Score</span>
-                            <span class="metric-value">87/100</span>
+                            <span class="metric-value">84/100</span>
                         </div>
                         
                         <div class="metric">
@@ -631,7 +1031,7 @@
                         </div>
                         
                         <div class="risk-meter">
-                            <div class="risk-level" style="width: 25%; background: var(--success);"></div>
+                            <div class="risk-level" style="width: 28%; background: var(--success);"></div>
                         </div>
                         <div class="risk-labels">
                             <span>Low</span>
@@ -647,19 +1047,143 @@
                         
                         <div class="metric">
                             <span>Insurance Premium (Annual)</span>
-                            <span class="metric-value">1.2%</span>
+                            <span class="metric-value">1.35%</span>
                         </div>
                         
                         <div class="metric">
                             <span>Recommended Coverage</span>
-                            <span class="metric-value">$52,800</span>
+                            <span class="metric-value">$98,500</span>
                         </div>
                         
                         <div class="metric">
                             <span>BTCFi Yield Opportunity</span>
-                            <span class="metric-value" style="color:var(--accent)">4.8% APY</span>
+                            <span class="metric-value" style="color:var(--accent)">5.2% APY</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hybrid">
+        <div class="container">
+            <h2 class="section-title">Hybrid Model Demonstration</h2>
+            <p class="section-subtitle">See how BlocentraAI combines protection with yield generation</p>
+            
+            <div class="hybrid-demo">
+                <div class="demo-header">
+                    <h3 class="demo-title">Protect & Grow Your Bitcoin</h3>
+                    <p class="demo-subtitle">Our hybrid model enables you to earn yield on idle BTC while maintaining full protection against risks</p>
+                </div>
+                
+                <div class="demo-steps">
+                    <div class="step active">
+                        <div class="step-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="step-number">1</div>
+                        <h4 class="step-title">Idle Bitcoin</h4>
+                        <p class="step-desc">BTC sitting idle with no protection or yield</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="step-number">2</div>
+                        <h4 class="step-title">Risk Assessment</h4>
+                        <p class="step-desc">AI analyzes wallet and market risks</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="step-number">3</div>
+                        <h4 class="step-title">Insurance Coverage</h4>
+                        <p class="step-desc">Dynamic policy issued based on risk profile</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="step-number">4</div>
+                        <h4 class="step-title">Yield Activation</h4>
+                        <p class="step-desc">BTC allocated to AI-vetted yield strategies</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="step-number">5</div>
+                        <h4 class="step-title">Protected Growth</h4>
+                        <p class="step-desc">Earn yield while maintaining full protection</p>
+                    </div>
+                </div>
+                
+                <div class="demo-content">
+                    <div class="demo-visual">
+                        <h3 style="color: var(--accent); margin-bottom: 1.5rem;">Value Flow Visualization</h3>
+                        <div style="display: flex; align-items: center; height: 100%;">
+                            <div style="flex: 1; text-align: center;">
+                                <div style="width: 150px; height: 150px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2.5rem; color: var(--accent);">2.75 BTC</div>
+                                        <div style="font-size: 1rem; opacity: 0.8;">Idle Value</div>
+                                    </div>
+                                </div>
+                                <div style="margin: 2rem 0; position: relative;">
+                                    <div style="height: 4px; background: linear-gradient(to right, var(--accent), #00b897); width: 100%; position: relative;">
+                                        <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--dark); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-around;">
+                                    <div style="text-align: center;">
+                                        <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 3px solid var(--success); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                            <div>
+                                                <div style="font-size: 1.8rem; color: var(--success);">98%</div>
+                                                <div style="font-size: 0.9rem; opacity: 0.8;">Protected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                            <div>
+                                                <div style="font-size: 1.8rem; color: var(--accent);">5.2%</div>
+                                                <div style="font-size: 0.9rem; opacity: 0.8;">APY</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-chart">
+                        <h3 style="color: var(--accent); margin-bottom: 1.5rem;">Projected Growth</h3>
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <div class="metric">
+                                <span>Projected Value in 3 Years</span>
+                                <span class="metric-value" style="color: var(--accent);">$145,320</span>
+                            </div>
+                            <div class="metric">
+                                <span>Accumulated Yield</span>
+                                <span class="metric-value" style="color: var(--accent);">$19,850</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-controls">
+                    <button class="demo-btn">Reset Demo</button>
+                    <button class="demo-btn primary">Try with Your Wallet</button>
                 </div>
             </div>
         </div>
@@ -668,37 +1192,45 @@
     <section id="roadmap">
         <div class="container">
             <h2 class="section-title">Product Roadmap</h2>
+            <p class="section-subtitle">Our strategic plan for global Bitcoin risk infrastructure</p>
+            
             <div class="roadmap">
                 <div class="roadmap-item">
                     <div class="roadmap-phase">PHASE 1: MVP (Q3 2024)</div>
-                    <h3>Core Protection Launch</h3>
+                    <h3 class="roadmap-title">Core Protection Launch</h3>
                     <ul class="roadmap-features">
                         <li>Wallet risk scoring engine</li>
                         <li>Basic insurance prototype</li>
                         <li>BTCFi vault testnet</li>
                         <li>Retail user onboarding</li>
+                        <li>Estonian regulatory approval</li>
+                        <li>First institutional pilots</li>
                     </ul>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-phase">PHASE 2: EXPANSION (2025)</div>
-                    <h3>Institutional Integration</h3>
+                    <h3 class="roadmap-title">Institutional Integration</h3>
                     <ul class="roadmap-features">
                         <li>API licensing platform</li>
                         <li>Institutional dashboards</li>
                         <li>Smart contract coverage</li>
                         <li>EU regulatory compliance</li>
+                        <li>Asian market entry</li>
+                        <li>Reinsurance partnerships</li>
                     </ul>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-phase">PHASE 3: GLOBAL (2026)</div>
-                    <h3>Full Ecosystem</h3>
+                    <h3 class="roadmap-title">Full Ecosystem</h3>
                     <ul class="roadmap-features">
                         <li>Predictive risk models</li>
                         <li>Global compliance suite</li>
                         <li>B2G risk infrastructure</li>
                         <li>Advanced vault products</li>
+                        <li>Mobile-first emerging markets</li>
+                        <li>Risk data marketplace</li>
                     </ul>
                 </div>
             </div>
@@ -708,79 +1240,138 @@
     <footer id="contact">
         <div class="container">
             <div class="footer-logo">Bloc<span>entra</span>AI</div>
-            <p>Securing the Future of Bitcoin with Intelligence, Safety, and Yield</p>
+            <p class="footer-tagline">Securing the Future of Bitcoin with Intelligence, Safety, and Yield</p>
             
             <div class="contact-info">
                 <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope contact-icon"></i>
                     <span>riekgatluak25@gmail.com</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
+                    <i class="fab fa-whatsapp contact-icon"></i>
                     <span>+211 981 211 736</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
                     <span>Tallinn, Estonia (HQ)</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-file-pdf contact-icon"></i>
+                    <span>Investor Deck</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github contact-icon"></i>
+                    <span>Technical Documentation</span>
                 </div>
             </div>
             
             <div class="copyright">
-                © 2025 BlocentraAI. All rights reserved. This is a simulated MVP for demonstration purposes.
+                © 2025 BlocentraAI. All rights reserved. | This is a simulated MVP for investor demonstration purposes.
             </div>
         </div>
     </footer>
 
     <script>
-        // Simple simulation functionality
+        // Initialize growth chart
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        const growthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Now', '6 Months', '1 Year', '2 Years', '3 Years'],
+                datasets: [{
+                    label: 'Protected Value',
+                    data: [98500, 105800, 115200, 125500, 145320],
+                    borderColor: '#00d9b0',
+                    backgroundColor: 'rgba(0, 217, 176, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#00d9b0',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'Traditional Holding',
+                    data: [98500, 100200, 102500, 106800, 112400],
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Step animation for hybrid demo
+        const steps = document.querySelectorAll('.step');
+        let currentStep = 0;
+        
+        function updateSteps() {
+            steps.forEach((step, index) => {
+                if (index <= currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+            
+            // Simulate data changes based on step
+            if (currentStep === 1) {
+                document.querySelector('.risk-level').style.width = '28%';
+                document.querySelector('.metric-value:nth-child(2)').textContent = 'Low';
+                document.querySelector('.metric-value:nth-child(2)').style.color = 'var(--success)';
+            }
+            
+            if (currentStep === 3) {
+                // Simulate APY change
+                const apyValue = document.querySelector('.metric-value:nth-child(7)');
+                apyValue.textContent = '5.2% APY';
+                apyValue.style.color = 'var(--accent)';
+            }
+            
+            currentStep = (currentStep + 1) % 6;
+        }
+        
+        // Auto-advance steps
+        setInterval(updateSteps, 2500);
+        
+        // Initial update
+        updateSteps();
+        
+        // Risk simulation button
         document.querySelector('.cta-button').addEventListener('click', function() {
-            const walletInput = document.getElementById('walletAddress');
-            const btcInput = document.getElementById('btcAmount');
-            
-            // Basic validation
-            if(!walletInput.value || !btcInput.value) {
-                alert('Please enter wallet address and BTC amount');
-                return;
-            }
-            
-            // Simulate risk assessment
-            const walletType = document.getElementById('walletType').value;
-            const usagePattern = document.getElementById('usagePattern').value;
-            
-            // Generate random results based on inputs
-            const trustScore = Math.floor(Math.random() * 30) + 70;
-            const premiumRate = (Math.random() * 1.5 + 0.5).toFixed(2);
-            const apy = (Math.random() * 3 + 3).toFixed(2);
-            
-            // Update results
-            document.querySelector('.metric-value:nth-child(1)').textContent = `${trustScore}/100`;
-            
-            // Update risk meter
-            const riskLevel = document.querySelector('.risk-level');
-            let riskWidth = 25;
-            let riskColor = 'var(--success)';
-            
-            if(trustScore < 60) {
-                riskWidth = 75;
-                riskColor = 'var(--danger)';
-            } else if(trustScore < 80) {
-                riskWidth = 50;
-                riskColor = 'var(--warning)';
-            }
-            
-            riskLevel.style.width = `${riskWidth}%`;
-            riskLevel.style.background = riskColor;
-            
-            // Update other metrics
-            document.querySelector('.metric-value:nth-child(2)').textContent = 
-                trustScore < 60 ? 'High' : (trustScore < 80 ? 'Medium' : 'Low');
-            document.querySelector('.metric-value:nth-child(2)').style.color = riskColor;
-            
-            document.querySelector('.metric-value:nth-child(5)').textContent = `${premiumRate}%`;
-            document.querySelector('.metric-value:nth-child(7)').textContent = `${apy}% APY`;
-            
-            // Show success message
-            alert('Risk assessment complete! View your results below.');
+            alert('Thank you for your interest! Our investor deck has been sent to your email.');
         });
     </script>
 </body>
