@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlocentraAI - MVP Simulation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a3a6c;
+            --secondary: #2a5ca0;
+            --accent: #00c8a0;
+            --light: #f5f9ff;
+            --dark: #0a1a30;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a1a30 0%, #1a3a6c 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: rgba(10, 26, 48, 0.95);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .tagline {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .cta-button {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 200, 160, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 200, 160, 0.4);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 200, 160, 0.3);
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            background: rgba(0, 200, 160, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .card-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .card-features li:before {
+            content: '✓';
+            color: var(--accent);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .status-dev {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-planned {
+            background: rgba(66, 133, 244, 0.2);
+            color: #4285f4;
+        }
+        
+        .simulation-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .simulation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .simulation-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .simulation-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .simulation-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            height: 100%;
+        }
+        
+        .result-title {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .risk-meter {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .risk-level {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        
+        .risk-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .metric-value {
+            font-weight: 600;
+        }
+        
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .roadmap-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .roadmap-phase {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .roadmap-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .roadmap-features li {
+            padding: 5px 0;
+            display: flex;
+        }
+        
+        .roadmap-features li:before {
+            content: '•';
+            color: var(--accent);
+            margin-right: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt logo-icon"></i>
+                    <div class="logo-text">Bloc<span>entra</span>AI</div>
+                </div>
+                <div class="nav-links">
+                    <a href="#products">Products</a>
+                    <a href="#simulation">Demo</a>
+                    <a href="#roadmap">Roadmap</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="tagline">AI-Powered Bitcoin Protection</div>
+            <h1>Secure Bitcoin with Intelligent Risk Infrastructure</h1>
+            <p>BlocentraAI provides AI-native protection, risk intelligence, and capital activation for Bitcoin holders worldwide. Our trustless platform makes Bitcoin safer, insurable, and financially productive.</p>
+            <button class="cta-button">Request Demo</button>
+        </div>
+    </section>
+
+    <section id="products">
+        <div class="container">
+            <h2 class="section-title">Core Products</h2>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-shield-alt card-icon"></i>
+                        <h3 class="card-title">AI-Powered Bitcoin Insurance</h3>
+                        <div class="card-subtitle">Dynamic protection for wallets & protocols</div>
+                        <span class="status-badge status-active">MVP Available</span>
+                    </div>
+                    <div class="card-body">
+                        <p>AI-driven insurance policies covering:</p>
+                        <ul class="card-features">
+                            <li>Wallet compromises & key theft</li>
+                            <li>Smart contract failures</li>
+                            <li>Bridge vulnerabilities</li>
+                            <li>Phishing attacks</li>
+                        </ul>
+                        <p>Dynamic pricing based on real-time risk assessment.</p>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-brain card-icon"></i>
+                        <h3 class="card-title">BTC Risk Intelligence Engine</h3>
+                        <div class="card-subtitle">Real-time wallet scoring & threat detection</div>
+                        <span class="status-badge status-active">MVP Available</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Continuous analysis of Bitcoin activity:</p>
+                        <ul class="card-features">
+                            <li>Wallet trust scoring (0-100)</li>
+                            <li>Behavioral anomaly detection</li>
+                            <li>Threat signal monitoring</li>
+                            <li>Predictive risk modeling</li>
+                        </ul>
+                        <p>Tailored to Bitcoin's UTXO architecture.</p>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-vault card-icon"></i>
+                        <h3 class="card-title">BTCFi Vaults</h3>
+                        <div class="card-subtitle">Insured yield for idle Bitcoin</div>
+                        <span class="status-badge status-dev">In Development</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Activate idle BTC with protection:</p>
+                        <ul class="card-features">
+                            <li>Risk-weighted yield pools</li>
+                            <li>AI-vetted lending protocols</li>
+                            <li>Integrated insurance coverage</li>
+                            <li>Real-time protection scoring</li>
+                        </ul>
+                        <p>Non-custodial design preserves ownership.</p>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line card-icon"></i>
+                        <h3 class="card-title">Predictive Risk Models</h3>
+                        <div class="card-subtitle">Anticipate systemic threats</div>
+                        <span class="status-badge status-dev">In Development</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Advanced forecasting algorithms:</p>
+                        <ul class="card-features">
+                            <li>Black swan event prediction</li>
+                            <li>Protocol failure forecasting</li>
+                            <li>Market liquidation risks</li>
+                            <li>Bridge exploit detection</li>
+                        </ul>
+                        <p>Enables preemptive risk mitigation.</p>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-cogs card-icon"></i>
+                        <h3 class="card-title">B2B API Ecosystem</h3>
+                        <div class="card-subtitle">Integrate protection into any platform</div>
+                        <span class="status-badge status-dev">In Development</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Modular APIs for integration:</p>
+                        <ul class="card-features">
+                            <li>Real-time risk scoring API</li>
+                            <li>Fraud intelligence feeds</li>
+                            <li>Claims management system</li>
+                            <li>Wallet reputation tracking</li>
+                        </ul>
+                        <p>For exchanges, wallets & DeFi protocols.</p>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="card-header">
+                        <i class="fas fa-building card-icon"></i>
+                        <h3 class="card-title">Institutional Compliance</h3>
+                        <div class="card-subtitle">Regulatory-ready dashboards</div>
+                        <span class="status-badge status-planned">Q3 2025</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Tools for institutional adoption:</p>
+                        <ul class="card-features">
+                            <li>Compliance dashboards</li>
+                            <li>Auditable risk analytics</li>
+                            <li>AML/KYC integration</li>
+                            <li>Regulatory reporting</li>
+                        </ul>
+                        <p>Tailored for funds, custodians & exchanges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="simulation">
+        <div class="container">
+            <h2 class="section-title">Risk Simulation Demo</h2>
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h3 class="simulation-title">Bitcoin Wallet Risk Assessment</h3>
+                    <div class="status-badge status-active">Live Simulation</div>
+                </div>
+                
+                <div class="simulation-content">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="walletAddress">Bitcoin Wallet Address</label>
+                            <input type="text" id="walletAddress" placeholder="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="btcAmount">BTC Amount</label>
+                            <input type="number" id="btcAmount" placeholder="1.5" min="0.001" step="0.001">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="walletType">Wallet Type</label>
+                            <select id="walletType">
+                                <option value="cold">Cold Storage</option>
+                                <option value="hot">Hot Wallet</option>
+                                <option value="multisig">Multi-signature</option>
+                                <option value="custodial">Custodial</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="usagePattern">Usage Pattern</label>
+                            <select id="usagePattern">
+                                <option value="hodl">Long-term holding</option>
+                                <option value="active">Regular transactions</option>
+                                <option value="defi">BTCFi participation</option>
+                                <option value="exchange">Exchange trading</option>
+                            </select>
+                        </div>
+                        
+                        <button class="cta-button" style="width:100%;">Assess Risk & Generate Quote</button>
+                    </div>
+                    
+                    <div class="result-box">
+                        <h3 class="result-title">Risk Assessment Report</h3>
+                        <div class="metric">
+                            <span>Wallet Trust Score</span>
+                            <span class="metric-value">87/100</span>
+                        </div>
+                        
+                        <div class="metric">
+                            <span>Threat Level</span>
+                            <span class="metric-value" style="color:var(--success)">Low</span>
+                        </div>
+                        
+                        <div class="risk-meter">
+                            <div class="risk-level" style="width: 25%; background: var(--success);"></div>
+                        </div>
+                        <div class="risk-labels">
+                            <span>Low</span>
+                            <span>Medium</span>
+                            <span>High</span>
+                            <span>Critical</span>
+                        </div>
+                        
+                        <div class="metric">
+                            <span>Detected Anomalies</span>
+                            <span class="metric-value" style="color:var(--success)">None</span>
+                        </div>
+                        
+                        <div class="metric">
+                            <span>Insurance Premium (Annual)</span>
+                            <span class="metric-value">1.2%</span>
+                        </div>
+                        
+                        <div class="metric">
+                            <span>Recommended Coverage</span>
+                            <span class="metric-value">$52,800</span>
+                        </div>
+                        
+                        <div class="metric">
+                            <span>BTCFi Yield Opportunity</span>
+                            <span class="metric-value" style="color:var(--accent)">4.8% APY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Product Roadmap</h2>
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">PHASE 1: MVP (Q3 2024)</div>
+                    <h3>Core Protection Launch</h3>
+                    <ul class="roadmap-features">
+                        <li>Wallet risk scoring engine</li>
+                        <li>Basic insurance prototype</li>
+                        <li>BTCFi vault testnet</li>
+                        <li>Retail user onboarding</li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">PHASE 2: EXPANSION (2025)</div>
+                    <h3>Institutional Integration</h3>
+                    <ul class="roadmap-features">
+                        <li>API licensing platform</li>
+                        <li>Institutional dashboards</li>
+                        <li>Smart contract coverage</li>
+                        <li>EU regulatory compliance</li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">PHASE 3: GLOBAL (2026)</div>
+                    <h3>Full Ecosystem</h3>
+                    <ul class="roadmap-features">
+                        <li>Predictive risk models</li>
+                        <li>Global compliance suite</li>
+                        <li>B2G risk infrastructure</li>
+                        <li>Advanced vault products</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-logo">Bloc<span>entra</span>AI</div>
+            <p>Securing the Future of Bitcoin with Intelligence, Safety, and Yield</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>riekgatluak25@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+211 981 211 736</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Tallinn, Estonia (HQ)</span>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 BlocentraAI. All rights reserved. This is a simulated MVP for demonstration purposes.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple simulation functionality
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            const walletInput = document.getElementById('walletAddress');
+            const btcInput = document.getElementById('btcAmount');
+            
+            // Basic validation
+            if(!walletInput.value || !btcInput.value) {
+                alert('Please enter wallet address and BTC amount');
+                return;
+            }
+            
+            // Simulate risk assessment
+            const walletType = document.getElementById('walletType').value;
+            const usagePattern = document.getElementById('usagePattern').value;
+            
+            // Generate random results based on inputs
+            const trustScore = Math.floor(Math.random() * 30) + 70;
+            const premiumRate = (Math.random() * 1.5 + 0.5).toFixed(2);
+            const apy = (Math.random() * 3 + 3).toFixed(2);
+            
+            // Update results
+            document.querySelector('.metric-value:nth-child(1)').textContent = `${trustScore}/100`;
+            
+            // Update risk meter
+            const riskLevel = document.querySelector('.risk-level');
+            let riskWidth = 25;
+            let riskColor = 'var(--success)';
+            
+            if(trustScore < 60) {
+                riskWidth = 75;
+                riskColor = 'var(--danger)';
+            } else if(trustScore < 80) {
+                riskWidth = 50;
+                riskColor = 'var(--warning)';
+            }
+            
+            riskLevel.style.width = `${riskWidth}%`;
+            riskLevel.style.background = riskColor;
+            
+            // Update other metrics
+            document.querySelector('.metric-value:nth-child(2)').textContent = 
+                trustScore < 60 ? 'High' : (trustScore < 80 ? 'Medium' : 'Low');
+            document.querySelector('.metric-value:nth-child(2)').style.color = riskColor;
+            
+            document.querySelector('.metric-value:nth-child(5)').textContent = `${premiumRate}%`;
+            document.querySelector('.metric-value:nth-child(7)').textContent = `${apy}% APY`;
+            
+            // Show success message
+            alert('Risk assessment complete! View your results below.');
+        });
+    </script>
+</body>
+</html>
