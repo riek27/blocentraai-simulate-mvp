@@ -1,677 +1,2043 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BlocentraAI — Unlock 99% of Idle Bitcoin with AI</title>
-  <meta name="description" content="BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains. Join the early access list." />
-  <meta name="keywords" content="Bitcoin, BTC, liquidity, AI, blockchain, DeFi, crypto, cross-chain, non-custodial" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="BlocentraAI" />
-  <meta property="og:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI" />
-  <meta property="og:description" content="BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains." />
-  <meta property="og:image" content="/assets/og-cover.png" />
-  <meta property="og:url" content="https://example.com/" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI" />
-  <meta name="twitter:description" content="Self-learning AI that unlocks idle Bitcoin liquidity across ecosystems." />
-  <meta name="twitter:image" content="/assets/og-cover.png" />
-
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-  <link rel="canonical" href="https://example.com/" />
-
-  <meta name="theme-color" content="#0B0F19" />
-
-  <style>
-    /* ===========================
-       Base, Reset, Variables
-       =========================== */
-    :root {
-      --bg: #0B0F19;
-      --surface: #121826;
-      --muted-surface: #0f1422;
-      --primary: #4F46E5; /* indigo */
-      --primary-2: #22D3EE; /* cyan */
-      --text: #E5E7EB; /* gray-200 */
-      --muted: #9CA3AF; /* gray-400 */
-      --success: #10B981;
-      --warning: #F59E0B;
-      --danger: #EF4444;
-      --ring: rgba(79,70,229,.5);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-
-      --radius-xl: 1.25rem;
-      --radius-2xl: 1.5rem;
-      --nav-h: 72px;
-      --maxw: 1200px;
-    }
-    [data-theme="light"]{
-      --bg:#F7F8FB;
-      --surface:#FFFFFF;
-      --muted-surface:#F2F4F8;
-      --text:#0B1221;
-      --muted:#4B5563;
-      --shadow: 0 10px 30px rgba(2,6,23,.08);
-      --ring: rgba(34,211,238,.45);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 80% -20%, rgba(79,70,229,.15), transparent 60%),
-                  radial-gradient(1000px 700px at -10% 20%, rgba(34,211,238,.12), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; cursor: pointer; }
-    .container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding: 0 20px; }
-
-    /* ===========================
-       Utilities
-       =========================== */
-    .visually-hidden {
-      position: absolute !important; height: 1px; width: 1px; overflow: hidden;
-      clip: rect(1px,1px,1px,1px); white-space: nowrap; clip-path: inset(50%);
-    }
-    .card {
-      background: linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%)) padding-box,
-                  linear-gradient(135deg, color-mix(in srgb, var(--primary), transparent 35%), color-mix(in srgb, var(--primary-2), transparent 35%)) border-box;
-      border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: saturate(140%) blur(8px);
-    }
-    .pill {
-      display:inline-flex; align-items:center; gap:.5rem;
-      background: color-mix(in srgb, var(--primary), transparent 80%);
-      color: var(--text);
-      padding: .35rem .7rem; border-radius: 999px; font-size: .8rem;
-    }
-    .btn {
-      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
-      padding: .9rem 1.15rem; border-radius: 999px; border: 0;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: white; box-shadow: 0 8px 24px rgba(79,70,229,.3);
-      transition: transform .2s ease, box-shadow .2s ease, opacity .2s;
-    }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(79,70,229,.35); }
-    .btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1px solid color-mix(in srgb, var(--text), transparent 75%);
-    }
-    .grid { display:grid; gap: 1.25rem; }
-    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    @media (max-width: 900px){
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    }
-
-    /* ===========================
-       Skip link
-       =========================== */
-    .skip { position: absolute; left: -9999px; top: -9999px; }
-    .skip:focus { left: 16px; top: 16px; z-index: 9999; background: black; color: white; padding: .5rem .75rem; border-radius: .5rem; }
-
-    /* ===========================
-       Nav
-       =========================== */
-    .nav {
-      position: sticky; top: 0; z-index: 1000;
-      backdrop-filter: saturate(140%) blur(10px);
-      background: color-mix(in srgb, var(--bg), transparent 10%);
-      border-bottom: 1px solid color-mix(in srgb, var(--text), transparent 90%);
-      height: var(--nav-h);
-    }
-    .nav-inner {
-      height: 100%; display:flex; align-items:center; justify-content:space-between;
-    }
-    .brand { display:flex; align-items:center; gap:.7rem; font-weight:700; letter-spacing:.2px; }
-    .brand svg { width: 28px; height: 28px; }
-    .nav-links { display:flex; align-items:center; gap: 1rem; }
-    .nav-links a {
-      padding:.5rem .75rem; border-radius: .6rem; color: var(--muted);
-    }
-    .nav-links a.active, .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--text), transparent 92%); }
-    .theme-toggle {
-      padding:.55rem .7rem; border-radius: .7rem; border:1px solid color-mix(in srgb, var(--text), transparent 80%);
-      background: color-mix(in srgb, var(--surface), transparent 5%);
-      color: var(--text);
-    }
-
-    /* ===========================
-       Sections
-       =========================== */
-    section { padding: clamp(56px, 8vw, 100px) 0; }
-    .section-head {
-      display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin-bottom: 1.25rem;
-    }
-    .kicker { color: var(--primary-2); font-weight:600; letter-spacing: .6px; text-transform: uppercase; font-size:.8rem; }
-    h1, h2, h3 { line-height: 1.2; margin: .35rem 0 .6rem; }
-    h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-    h3 { font-size: 1.1rem; }
-
-    /* ===========================
-       Hero
-       =========================== */
-    .hero { padding-top: 24px; }
-    .hero-wrap { display:grid; gap: 2rem; grid-template-columns: 1.15fr .85fr; align-items:center; }
-    @media (max-width: 1000px){ .hero-wrap { grid-template-columns: 1fr; } }
-    .hero .subtitle { color: var(--muted); max-width: 56ch; }
-    .cta-row { display:flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
-    .trust { display:flex; gap:.6rem; flex-wrap:wrap; margin-top: .8rem; color: var(--muted); font-size:.9rem; }
-    .hero-visual {
-      position: relative; aspect-ratio: 4/3; border-radius: var(--radius-2xl); overflow: hidden;
-      background:
-        radial-gradient(120% 120% at 80% 10%, color-mix(in srgb, var(--primary), transparent 55%), transparent 60%),
-        radial-gradient(120% 120% at 10% 90%, color-mix(in srgb, var(--primary-2), transparent 55%), transparent 60%),
-        linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%));
-      border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
-      box-shadow: var(--shadow);
-    }
-    .mesh {
-      position:absolute; inset:0; opacity:.7;
-      background:
-        radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,.06), transparent 60%),
-        conic-gradient(from 0deg at 50% 50%, rgba(79,70,229,.25), rgba(34,211,238,.2), rgba(79,70,229,.25));
-      mix-blend-mode: screen;
-    }
-    .overlay-card {
-      position:absolute; right: 6%; top: 8%;
-      background: color-mix(in srgb, var(--surface), transparent 10%);
-      border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
-      border-radius: 1rem; padding: .8rem .9rem; min-width: 220px; box-shadow: var(--shadow);
-    }
-    .overlay-card small { color: var(--muted); }
-
-    /* ===========================
-       Logos
-       =========================== */
-    .logos { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 1.25rem; align-items:center; opacity:.9; }
-    .logos img { filter: grayscale(100%); opacity:.7; height: 26px; margin-inline: auto; }
-    @media (max-width: 800px){ .logos { grid-template-columns: repeat(3, 1fr); } }
-
-    /* ===========================
-       Split Problem/Solution
-       =========================== */
-    .split { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
-    @media (max-width: 900px){ .split { grid-template-columns: 1fr; } }
-    .bullet { display:flex; align-items:flex-start; gap:.7rem; }
-    .bullet svg { flex:0 0 auto; margin-top:.2rem; }
-
-    /* ===========================
-       Steps (accordion cards)
-       =========================== */
-    .steps { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
-    @media (max-width: 900px){ .steps { grid-template-columns: 1fr; } }
-    .step {
-      border-radius: var(--radius-xl); padding: 1rem; border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
-      background: color-mix(in srgb, var(--surface), transparent 0%);
-      transition: transform .2s ease;
-    }
-    .step[open] { transform: translateY(-2px); }
-    .step > summary {
-      list-style: none; cursor: pointer; display:flex; align-items:center; gap:.75rem; padding:.4rem;
-    }
-    .step > summary::-webkit-details-marker { display:none; }
-    .badge { background: color-mix(in srgb, var(--primary-2), transparent 70%); color: var(--text); padding:.25rem .55rem; border-radius:.6rem; font-size:.8rem; }
-
-    /* ===========================
-       KPI counter strip
-       =========================== */
-    .strip {
-      display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .8rem;
-      background: color-mix(in srgb, var(--surface), transparent 0%); border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
-      padding: 1rem; border-radius: var(--radius-2xl);
-    }
-    @media (max-width: 800px){ .strip { grid-template-columns: 1fr; } }
-    .kpi { text-align:center; padding: .6rem .4rem; }
-    .kpi .num { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: .5px; }
-
-    /* ===========================
-       Features
-       =========================== */
-    .feature { padding: 1rem; border: 1px solid color-mix(in srgb, var(--text), transparent 88%); border-radius: var(--radius-xl); background: color-mix(in srgb, var(--surface), transparent 0%); }
-
-    /* ===========================
-       Chart
-       =========================== */
-    .chart-wrap {
-      padding: 1rem; border-radius: var(--radius-2xl);
-      border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%));
-    }
-
-    /* ===========================
-       Pricing
-       =========================== */
-    .toggle {
-      display:inline-flex; gap:.4rem; align-items:center; border:1px solid color-mix(in srgb,var(--text),transparent 85%);
-      border-radius:999px; padding:.25rem; background: color-mix(in srgb, var(--surface), transparent 5%);
-    }
-    .toggle button { border-radius:999px; padding:.45rem .8rem; border:0; background: transparent; color: var(--muted); }
-    .toggle button.active { background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: white; }
-    .pricing { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
-    @media (max-width: 900px){ .pricing { grid-template-columns: 1fr; } }
-    .price-card { padding: 1.2rem; border: 1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: var(--radius-2xl); background: color-mix(in srgb, var(--surface), transparent 0%); position:relative; }
-    .price-card.highlight { outline: 2px solid color-mix(in srgb, var(--primary), transparent 10%); box-shadow: 0 10px 30px rgba(79,70,229,.15); }
-    .price { font-size: 2rem; font-weight: 800; margin:.3rem 0; }
-
-    /* ===========================
-       Testimonials
-       =========================== */
-    .testimonials { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
-    @media (max-width: 900px){ .testimonials { grid-template-columns: 1fr; } }
-    .testimonial { padding: 1rem; border:1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: var(--radius-xl); background: color-mix(in srgb, var(--surface), transparent 0%); }
-    .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-
-    /* ===========================
-       FAQ
-       =========================== */
-    .faq { display:grid; gap: .75rem; }
-    .faq details { border:1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: .9rem; background: color-mix(in srgb, var(--surface), transparent 0%); padding:.6rem .8rem; }
-    .faq summary { cursor:pointer; list-style:none; font-weight:600; }
-    .faq summary::-webkit-details-marker { display:none; }
-
-    /* ===========================
-       Form
-       =========================== */
-    form { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:.75rem; }
-    @media (max-width: 900px){ form { grid-template-columns: 1fr; } }
-    input, select {
-      padding: .9rem .9rem; border-radius: .8rem; border:1px solid color-mix(in srgb, var(--text), transparent 85%);
-      background: color-mix(in srgb, var(--surface), transparent 0%); color: var(--text);
-    }
-    input:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
-
-    /* ===========================
-       Footer
-       =========================== */
-    footer { padding: 60px 0; background: linear-gradient(180deg, color-mix(in srgb, var(--muted-surface), transparent 0%), transparent); border-top: 1px solid color-mix(in srgb, var(--text), transparent 90%); }
-    .footer-grid { display:grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 1rem; }
-    @media (max-width: 900px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
-    .subtle { color: var(--muted); }
-
-    /* ===========================
-       Reveal Animations
-       =========================== */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .btn, .step, .reveal { transition: none !important; }
-    }
-  </style>
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"BlocentraAI",
-    "url":"https://example.com/",
-    "logo":"https://example.com/assets/favicon.svg",
-    "sameAs":[]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Product",
-    "name":"BlocentraAI Liquidity AI",
-    "description":"Self-learning hybrid AI that unlocks idle Bitcoin liquidity across chains via non-custodial, risk-aware routing.",
-    "brand":{"@type":"Brand","name":"BlocentraAI"}
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlocentraAI — Unlock 99% of Idle Bitcoin with AI</title>
+    <meta name="description" content="BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains. Join the early access list.">
+    <meta name="keywords" content="Bitcoin, AI, liquidity, cryptocurrency, blockchain, DeFi, finance">
+    <meta name="author" content="BlocentraAI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://blocentra.ai/">
+    <meta property="og:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI">
+    <meta property="og:description" content="BlocentraAI transforms dormant BTC into active, secure liquidity across ecosystems.">
+    <meta property="og:image" content="/assets/og-cover.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://blocentra.ai/">
+    <meta property="twitter:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI">
+    <meta property="twitter:description" content="BlocentraAI transforms dormant BTC into active, secure liquidity across ecosystems.">
+    <meta property="twitter:image" content="/assets/og-cover.png">
+    
+    <link rel="canonical" href="https://blocentra.ai/">
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg: #0B0F19;
+            --surface: #121826;
+            --primary: #4F46E5;
+            --primary-2: #22D3EE;
+            --text: #E5E7EB;
+            --muted: #9CA3AF;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            
+            --radius: 0.75rem;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --header-height: 5rem;
+            
+            /* Fonts */
+            --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+        
+        /* Light theme overrides */
+        [data-theme="light"] {
+            --bg: #F9FAFB;
+            --surface: #FFFFFF;
+            --text: #1F2937;
+            --muted: #6B7280;
+        }
+        
+        /* Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-display: swap;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            color: var(--primary-2);
+        }
+        
+        /* Layout Components */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            border-radius: 2px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--muted);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Card */
+        .card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: var(--header-height);
+            transition: var(--transition);
+        }
+        
+        [data-theme="light"] header {
+            background-color: rgba(249, 250, 251, 0.8);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: calc(var(--header-height) + 2rem);
+            padding-bottom: 5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .trust-badges {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+        
+        .hero-visual {
+            position: relative;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Social Proof */
+        .social-proof {
+            padding: 3rem 0;
+            background-color: var(--surface);
+        }
+        
+        .logos-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .logo-item {
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: var(--transition);
+            height: 40px;
+        }
+        
+        .logo-item:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        /* Problem Solution Section */
+        .problem-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .problem-list, .solution-list {
+            list-style: none;
+        }
+        
+        .problem-item, .solution-item {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .problem-item::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+        
+        .solution-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+        
+        .diagram-container {
+            grid-column: 1 / -1;
+            margin-top: 3rem;
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        /* How It Works */
+        .how-it-works-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .step-card {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .step-card.active {
+            transform: scale(1.03);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .step-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .step-card.active .step-details {
+            max-height: 300px;
+        }
+        
+        /* Metrics */
+        .metrics {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (min-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .feature-icon {
+            margin-bottom: 1rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 12px;
+        }
+        
+        /* Data Visualization */
+        .data-viz {
+            background-color: var(--surface);
+            padding: 3rem;
+            border-radius: var(--radius);
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* Pricing */
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--muted);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            z-index: 2;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .price-period {
+            font-size: 1rem;
+            color: var(--muted);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+        
+        /* Testimonials */
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+        }
+        
+        .testimonial-role {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: var(--radius);
+            background-color: var(--surface);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .cta h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+        
+        .form-input {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            border: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text);
+            font-family: var(--font-body);
+        }
+        
+        .form-input:focus {
+            outline: 2px solid var(--primary-2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--surface);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .footer-logo {
+            grid-column: 1 / -1;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--muted);
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .footer-bottom {
+            grid-column: 1 / -1;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        [data-theme="light"] .footer-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-selector select {
+            background-color: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--muted);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        /* Accessibility */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 1001;
+            transition: top 0.3s;
+        }
+        
+        .skip-to-content:focus {
+            top: 0;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            background-color: var(--surface);
+            color: var(--text);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+        
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-actions {
+                justify-content: center;
+            }
+            
+            .trust-badges {
+                justify-content: center;
+            }
+            
+            .problem-solution {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .how-it-works-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+                order: -1;
+            }
+            
+            .testimonials-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: var(--header-height);
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - var(--header-height));
+                background-color: var(--bg);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 2rem;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-
-  <!-- NAV -->
-  <header class="nav" role="banner">
-    <div class="container nav-inner">
-      <a class="brand" href="#home" aria-label="BlocentraAI home">
-        <!-- Inline logo -->
-        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#22D3EE"/>
-            </linearGradient>
-          </defs>
-          <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#g)"/>
-          <path d="M24 11c7 0 12 5 12 12s-5 12-12 12S12 30 12 23" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="24" cy="23" r="4" fill="white"/>
-        </svg>
-        BlocentraAI
-      </a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#how" data-nav>How it works</a>
-        <a href="#features" data-nav>Features</a>
-        <a href="#pricing" data-nav>Pricing</a>
-        <a href="#faq" data-nav>FAQ</a>
-        <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" tabindex="-1">
-    <!-- HERO -->
-    <section id="home" class="hero container">
-      <div class="hero-wrap">
-        <div class="reveal">
-          <span class="pill" aria-hidden="true">AI-driven • Non-custodial • Cross-chain</span>
-          <h1>Unlock 99% of idle Bitcoin with self-learning AI</h1>
-          <p class="subtitle">BlocentraAI transforms dormant BTC into active, secure liquidity across ecosystems.</p>
-          <div class="cta-row">
-            <a class="btn" href="#lead" aria-label="Get Early Access">Get Early Access</a>
-            <a class="btn btn-outline" href="#" aria-label="Read the whitepaper (opens soon)">Read the Whitepaper</a>
-          </div>
-          <div class="trust" role="text">
-            <span>Backed by cryptography</span> • <span>AI-driven</span> • <span>Non-custodial integrations</span>
-          </div>
+    <a href="#main" class="skip-to-content">Skip to main content</a>
+    
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Blocentra<span>AI</span></a>
+            
+            <nav>
+                <button class="mobile-toggle" aria-label="Toggle navigation">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="#solution" class="nav-link">Solution</a></li>
+                    <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                    <li>
+                        <button class="theme-toggle" aria-label="Toggle theme">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </li>
+                    <li><a href="#early-access" class="btn btn-primary">Get Early Access</a></li>
+                </ul>
+            </nav>
         </div>
-        <figure class="hero-visual reveal" aria-label="Abstract visualization of Bitcoin and AI network">
-          <div class="mesh" aria-hidden="true"></div>
-          <figcaption class="visually-hidden">Abstract Bitcoin coin mesh and neural network lines with glassmorphism metric cards.</figcaption>
-          <div class="overlay-card" aria-live="polite">
-            <strong>Wallets</strong><br/><small>Graph score ↑ 0.82</small>
-          </div>
-          <div class="overlay-card" style="left: 6%; right:auto; top:auto; bottom: 10%;">
-            <strong>Risk Score</strong><br/><small>VaR 95% OK</small>
-          </div>
-          <div class="overlay-card" style="left:auto; right: 10%; top:auto; bottom: 18%;">
-            <strong>Liquidity Route</strong><br/><small>Multi-chain √</small>
-          </div>
-        </figure>
-      </div>
-
-      <!-- Social proof logos -->
-      <div class="container" style="margin-top: 28px;">
-        <div class="logos" aria-label="Featured by">
-          <img src="/assets/logos/logo-1.svg" alt="Logo 1 placeholder" loading="lazy"/>
-          <img src="/assets/logos/logo-2.svg" alt="Logo 2 placeholder" loading="lazy"/>
-          <img src="/assets/logos/logo-3.svg" alt="Logo 3 placeholder" loading="lazy"/>
-          <img src="/assets/logos/logo-4.svg" alt="Logo 4 placeholder" loading="lazy"/>
-          <img src="/assets/logos/logo-5.svg" alt="Logo 5 placeholder" loading="lazy"/>
-          <img src="/assets/logos/logo-6.svg" alt="Logo 6 placeholder" loading="lazy"/>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM / SOLUTION -->
-    <section class="container" id="problem">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Why now</div>
-          <h2>From dormant BTC to active capital</h2>
-        </div>
-      </div>
-      <div class="split">
-        <div class="card reveal" style="padding:1.1rem;">
-          <h3>The Problem</h3>
-          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Dormant BTC limits market efficiency.</p></div>
-          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Over-collateralization wastes capital.</p></div>
-          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Liquidity is fragmented across chains.</p></div>
-        </div>
-        <div class="card reveal" style="padding:1.1rem;">
-          <h3>Our Solution</h3>
-          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Hybrid self-learning model</strong> to detect safe unlock routes.</p></div>
-          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Non-custodial</strong> integrations & risk-aware flows.</p></div>
-          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Cross-chain</strong> activation with smart routing.</p></div>
-          <figure style="margin:1rem 0 0;">
-            <svg width="100%" height="140" viewBox="0 0 600 140" role="img" aria-label="Wallet nodes to AI engine to liquidity pools">
-              <defs><linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs>
-              <circle cx="60" cy="70" r="26" fill="none" stroke="url(#gl)" stroke-width="3"/>
-              <circle cx="60" cy="30" r="8" fill="url(#gl)"/><circle cx="60" cy="110" r="8" fill="url(#gl)"/><circle cx="30" cy="70" r="8" fill="url(#gl)"/>
-              <rect x="230" y="35" width="140" height="70" rx="14" fill="none" stroke="url(#gl)" stroke-width="3"/>
-              <text x="300" y="75" fill="currentColor" text-anchor="middle" font-size="14">AI Engine</text>
-              <circle cx="520" cy="50" r="18" fill="none" stroke="url(#gl)" stroke-width="3"/>
-              <circle cx="520" cy="95" r="18" fill="none" stroke="url(#gl)" stroke-width="3"/>
-              <path d="M86 70 H230" stroke="url(#gl)" stroke-width="2"/>
-              <path d="M370 70 C420 70 470 50 502 50" stroke="url(#gl)" stroke-width="2" fill="none"/>
-              <path d="M370 70 C420 70 470 95 502 95" stroke="url(#gl)" stroke-width="2" fill="none"/>
-            </svg>
-            <figcaption class="subtle">Wallet nodes → AI engine → liquidity pools (simplified).</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="container" id="how" aria-labelledby="how-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">How it works</div>
-          <h2 id="how-title">Analyze, assess, activate</h2>
-        </div>
-      </div>
-      <div class="steps">
-        <details class="step reveal" open>
-          <summary><span class="badge">01</span><strong> Analyze</strong> on-chain patterns</summary>
-          <p>Unsupervised clustering and graph signals identify dormant wallet cohorts and behavior fingerprints to estimate activation potential.</p>
-        </details>
-        <details class="step reveal">
-          <summary><span class="badge">02</span><strong> Assess</strong> risk & policy</summary>
-          <p>Risk scoring (VaR/expected shortfall), compliance checks, and guardrails ensure safe, non-custodial liquidity flows respecting constraints.</p>
-        </details>
-        <details class="step reveal">
-          <summary><span class="badge">03</span><strong> Activate</strong> liquidity routes</summary>
-          <p>AI selects cross-chain routes and execution windows to minimize slippage and maximize safety—then monitors and adapts in real-time.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- KPI STRIP -->
-    <section class="container">
-      <div class="strip reveal" aria-label="Demo metrics">
-        <div class="kpi"><div class="num" data-count="1254321">0</div><div class="subtle">Wallets analyzed</div></div>
-        <div class="kpi"><div class="num" data-count="8542093">0</div><div class="subtle">Liquidity routes simulated</div></div>
-        <div class="kpi"><div class="num" data-count="78">0</div><div class="subtle">Avg. unlock score</div></div>
-      </div>
-      <p class="subtle" style="margin:.5rem 0 0;">Simulated metrics for demo purposes.</p>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="container" id="features">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Product</div>
-          <h2>AI-first features for safe activation</h2>
-        </div>
-      </div>
-      <div class="grid grid-3">
-        <article class="feature reveal">
-          <h3>AI Risk Engine</h3>
-          <p>Adaptive risk scoring blends statistical VaR with graph-based anomaly detection for safe, policy-aware activation decisions.</p>
-        </article>
-        <article class="feature reveal">
-          <h3>Non-Custodial Bridges</h3>
-          <p>Integrates with audited, non-custodial protocols to route value without taking possession of user funds at any time.</p>
-        </article>
-        <article class="feature reveal">
-          <h3>Cross-Chain Routing</h3>
-          <p>Optimizes routes across chains and layers with latency, depth, and slippage constraints for reliable execution.</p>
-        </article>
-        <article class="feature reveal">
-          <h3>Institutional APIs</h3>
-          <p>High-throughput endpoints, granular controls, and observability built for funds, desks, and enterprise partners.</p>
-        </article>
-        <article class="feature reveal">
-          <h3>Privacy-Preserving Analytics</h3>
-          <p>Aggregated insights with differential privacy to protect entities while surfacing actionable signals.</p>
-        </article>
-        <article class="feature reveal">
-          <h3>Developer Sandbox</h3>
-          <p>Simulation tools and SDKs for testing strategies with synthetic order books and policy guardrails.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- CHART -->
-    <section class="container" aria-labelledby="chart-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Insights</div>
-          <h2 id="chart-title">Idle vs Activated BTC (simulated)</h2>
-        </div>
-      </div>
-      <div class="chart-wrap reveal">
-        <canvas id="chart" width="1200" height="420" role="img" aria-label="Line chart comparing idle and activated BTC over time"></canvas>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="container" id="pricing" aria-labelledby="pricing-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Pricing</div>
-          <h2 id="pricing-title">Start free, scale with confidence</h2>
-        </div>
-        <div class="toggle" role="group" aria-label="Billing period">
-          <button type="button" class="active" data-bill="m">Monthly</button>
-          <button type="button" data-bill="y">Annual</button>
-        </div>
-      </div>
-      <div class="pricing">
-        <div class="price-card reveal" aria-labelledby="p1">
-          <h3 id="p1">Founders</h3>
-          <div class="price" data-price-m="$0" data-price-y="$0">$0</div>
-          <p class="subtle">Waitlist, docs, community.</p>
-          <button class="btn" aria-label="Join Founders plan waitlist">Join Waitlist</button>
-        </div>
-        <div class="price-card highlight reveal" aria-labelledby="p2">
-          <h3 id="p2">Pro</h3>
-          <div class="price" data-price-m="$299/mo" data-price-y="$2,990/yr">$299/mo</div>
-          <p class="subtle">Priority API, higher limits, email support.</p>
-          <button class="btn" aria-label="Join Pro plan waitlist">Join Waitlist</button>
-        </div>
-        <div class="price-card reveal" aria-labelledby="p3">
-          <h3 id="p3">Enterprise</h3>
-          <div class="price" data-price-m="Talk to us" data-price-y="Talk to us">Talk to us</div>
-          <p class="subtle">Custom SLAs, on-prem options, dedicated support.</p>
-          <button class="btn btn-outline" aria-label="Talk to sales">Talk to Sales</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="container" aria-labelledby="t-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">What people say</div>
-          <h2 id="t-title">Trusted by builders & analysts</h2>
-        </div>
-      </div>
-      <div class="testimonials">
-        <figure class="testimonial reveal" aria-labelledby="q1">
-          <div style="display:flex; align-items:center; gap:.8rem;">
-            <img class="avatar" src="/assets/testimonial-1.jpg" alt="Portrait of Alex Chen, Portfolio Manager" loading="lazy"/>
-            <figcaption>
-              <strong>Alex Chen</strong><br/><span class="subtle">Portfolio Manager</span>
-            </figcaption>
-          </div>
-          <blockquote id="q1" style="margin:.8rem 0 0;">“BlocentraAI’s risk-aware routing is the first credible path to activating dormant BTC at scale.”</blockquote>
-        </figure>
-        <figure class="testimonial reveal" aria-labelledby="q2">
-          <div style="display:flex; align-items:center; gap:.8rem;">
-            <img class="avatar" src="/assets/testimonial-2.jpg" alt="Portrait of Priya Nair, Protocol Engineer" loading="lazy"/>
-            <figcaption>
-              <strong>Priya Nair</strong><br/><span class="subtle">Protocol Engineer</span>
-            </figcaption>
-          </div>
-          <blockquote id="q2" style="margin:.8rem 0 0;">“The hybrid self-learning model adapts to market regimes in a way static systems simply can’t.”</blockquote>
-        </figure>
-        <figure class="testimonial reveal" aria-labelledby="q3">
-          <div style="display:flex; align-items:center; gap:.8rem;">
-            <img class="avatar" src="/assets/testimonial-3.jpg" alt="Portrait of Mateo Silva, Quant Researcher" loading="lazy"/>
-            <figcaption>
-              <strong>Mateo Silva</strong><br/><span class="subtle">Quant Researcher</span>
-            </figcaption>
-          </div>
-          <blockquote id="q3" style="margin:.8rem 0 0;">“Non-custodial by design, with serious analytics—this is how crypto infrastructure should look.”</blockquote>
-        </figure>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="container" id="faq" aria-labelledby="faq-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">FAQ</div>
-          <h2 id="faq-title">Questions, answered</h2>
-        </div>
-      </div>
-      <div class="faq reveal" role="list">
-        <details role="listitem" open>
-          <summary>Is BlocentraAI custodial?</summary>
-          <p>No. We integrate with audited, non-custodial protocols and never take possession of user funds.</p>
-        </details>
-        <details role="listitem">
-          <summary>How do you “unlock” idle BTC safely?</summary>
-          <p>Our hybrid model scores risk and policy, then routes liquidity through non-custodial rails with ongoing monitoring and guardrails.</p>
-        </details>
-        <details role="listitem">
-          <summary>Which chains/wallets are supported first?</summary>
-          <p>We prioritize BTC mainnet connectivity and major L2/bridge providers, expanding to additional chains as integrations mature.</p>
-        </details>
-        <details role="listitem">
-          <summary>What’s your business model?</summary>
-          <p>Usage-based platform fees and premium plans for advanced APIs and support.</p>
-        </details>
-        <details role="listitem">
-          <summary>Security & audits?</summary>
-          <p>Defense-in-depth, continuous monitoring, third-party audits, and formal verification on critical paths.</p>
-        </details>
-        <details role="listitem">
-          <summary>Compliance considerations?</summary>
-          <p>Policy-aware scoring with configurable constraints; KYC/AML integrations for institutional workflows where applicable.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- LEAD FORM -->
-    <section class="container" id="lead" aria-labelledby="lead-title">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Join the waitlist</div>
-          <h2 id="lead-title">Get early access + whitepaper preview</h2>
-          <p class="subtle">We’ll keep you posted. No spam—promise.</p>
-        </div>
-      </div>
-      <form novalidate aria-describedby="form-help">
-        <label class="visually-hidden" for="name">Name</label>
-        <input id="name" name="name" placeholder="Your name" autocomplete="name" />
-        <label class="visually-hidden" for="email">Email</label>
-        <input id="email" name="email" placeholder="you@company.com" inputmode="email" autocomplete="email" />
-        <label class="visually-hidden" for="company">Company</label>
-        <input id="company" name="company" placeholder="Company (optional)" autocomplete="organization" />
-        <button class="btn" type="submit" aria-label="Submit to join the waitlist">Request Access</button>
-        <div id="form-help" class="visually-hidden" aria-live="polite"></div>
-      </form>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer role="contentinfo">
-    <div class="container footer-grid">
-      <div>
-        <div class="brand" aria-label="BlocentraAI">
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false" style="width:22px;height:22px;">
-            <defs><linearGradient id="g2" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#22D3EE"/></linearGradient></defs>
-            <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#g2)"/>
-            <path d="M24 11c7 0 12 5 12 12s-5 12-12 12S12 30 12 23" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="24" cy="23"
+    </header>
+    
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>Unlock 99% of idle Bitcoin with self-learning AI</h1>
+                    <p>BlocentraAI transforms dormant BTC into active, secure liquidity across ecosystems.</p>
+                    <div class="hero-actions">
+                        <a href="#early-access" class="btn btn-primary">Get Early Access</a>
+                        <a href="#" class="btn btn-outline">Read the Whitepaper</a>
+                    </div>
+                    <div class="trust-badges">
+                        <div class="badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22S2 16 2 8V2L12 4L22 2V8C22 16 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Backed by cryptography
+                        </div>
+                        <div class="badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.5V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.5 11.5C18.5 15 15.5 18.5 12 21.5C8.5 18.5 5.5 15 5.5 11.5C5.5 7.5 8.5 4.5 12 4.5C15.5 4.5 18.5 7.5 18.5 11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            AI-driven
+                        </div>
+                        <div class="badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12C21 12.5 17 16 17 16H7C7 16 3 12.5 3 12C3 11.5 7 8 7 8H17C17 8 21 11.5 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.5 12H9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Non-custodial integrations
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="/assets/hero-abstract-btc-ai.svg" alt="Abstract Bitcoin + AI network visualization" class="hero-image">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Social Proof -->
+        <section class="social-proof">
+            <div class="container logos-container">
+                <img src="/assets/logos/logo-1.svg" alt="Featured by TechCrunch" class="logo-item" aria-label="Featured by TechCrunch">
+                <img src="/assets/logos/logo-2.svg" alt="Featured by CoinDesk" class="logo-item" aria-label="Featured by CoinDesk">
+                <img src="/assets/logos/logo-3.svg" alt="Featured by Forbes" class="logo-item" aria-label="Featured by Forbes">
+                <img src="/assets/logos/logo-4.svg" alt="Featured by Bloomberg" class="logo-item" aria-label="Featured by Bloomberg">
+                <img src="/assets/logos/logo-5.svg" alt="Featured by The Block" class="logo-item" aria-label="Featured by The Block">
+                <img src="/assets/logos/logo-6.svg" alt="Featured by Decrypt" class="logo-item" aria-label="Featured by Decrypt">
+            </div>
+        </section>
+        
+        <!-- Problem Solution Section -->
+        <section id="solution" class="problem-solution-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Transforming Bitcoin Liquidity</h2>
+                </div>
+                
+                <div class="problem-solution">
+                    <div class="problem-column">
+                        <h3>The Problem</h3>
+                        <ul class="problem-list">
+                            <li class="problem-item">Dormant BTC limits market efficiency</li>
+                            <li class="problem-item">Over-collateralized loans lock more capital</li>
+                            <li class="problem-item">Fragmented liquidity across chains</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-column">
+                        <h3>Our Solution</h3>
+                        <ul class="solution-list">
+                            <li class="solution-item">Hybrid self-learning model to detect safe unlock routes</li>
+                            <li class="solution-item">Non-custodial integrations & risk-aware flows</li>
+                            <li class="solution-item">Cross-chain activation with smart routing</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="diagram-container">
+                    <img src="/assets/diagram-ai-routing.svg" alt="AI routing diagram showing wallet nodes connecting to AI engine which connects to liquidity pools" class="diagram-image">
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <div class="section-title">
+                    <h2>How It Works</h2>
+                </div>
+                
+                <div class="how-it-works-cards">
+                    <div class="card step-card">
+                        <div class="step-number">1</div>
+                        <h3>Analyze on-chain patterns</h3>
+                        <p>Our AI examines transaction history and wallet behavior using unsupervised learning.</p>
+                        <div class="step-details">
+                            <p>We process petabytes of blockchain data to identify patterns and opportunities for liquidity activation without compromising security.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card step-card">
+                        <div class="step-number">2</div>
+                        <h3>Assess risk & compliance</h3>
+                        <p>Each potential route undergoes rigorous security and regulatory evaluation.</p>
+                        <div class="step-details">
+                            <p>Our system evaluates hundreds of risk factors in real-time, ensuring all liquidity pathways meet the highest security and compliance standards.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card step-card">
+                        <div class="step-number">3</div>
+                        <h3>Activate safe liquidity route</h3>
+                        <p>Execute the optimal path to transform idle BTC into productive assets.</p>
+                        <div class="step-details">
+                            <p>Through non-custodial smart contracts and cross-chain bridges, we securely activate your Bitcoin while maintaining full control of your assets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Metrics -->
+        <section class="metrics">
+            <div class="container metrics-container">
+                <div class="metric-item">
+                    <div class="metric-value" id="wallets-analyzed">0</div>
+                    <div class="metric-label">Wallets analyzed</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value" id="liquidity-routes">0</div>
+                    <div class="metric-label">Liquidity routes simulated</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value" id="unlock-score">0%</div>
+                    <div class="metric-label">Avg. unlock score</div>
+                </div>
+            </div>
+            <div class="container">
+                <p style="text-align: center; margin-top: 2rem; opacity: 0.7; font-size: 0.875rem;">Simulated metrics for demo</p>
+            </div>
+        </section>
+        
+        <!-- Features -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Powerful Features</h2>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.5V7.5" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.5 11.5C18.5 15 15.5 18.5 12 21.5C8.5 18.5 5.5 15 5.5 11.5C5.5 7.5 8.5 4.5 12 4.5C15.5 4.5 18.5 7.5 18.5 11.5Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>AI Risk Engine</h3>
+                        <p>Our self-learning algorithm continuously evaluates thousands of risk factors to identify optimal liquidity pathways.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12C21 12.5 17 16 17 16H7C7 16 3 12.5 3 12C3 11.5 7 8 7 8H17C17 8 21 11.5 21 12Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 8V16" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.5 12H9.5" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Non-Custodial Bridges</h3>
+                        <p>Maintain full control of your assets while accessing liquidity across multiple blockchain ecosystems.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2L22 6L12 16H8V12L18 2Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 8L19 11" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 22H15H9Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 22H15" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Cross-Chain Routing</h3>
+                        <p>Intelligent pathfinding algorithm identifies the most efficient routes across blockchain networks.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.4 15C19.2669 15.5236 19.2271 16.0671 19.2824 16.6036C19.3377 17.1401 19.4872 17.6606 19.723 18.1386C19.9588 18.6166 20.2768 19.0442 20.6605 19.3997C21.0442 19.7553 21.4869 20.0325 21.9648 20.2172L18.6 22L16 19.4L17.6 17.8" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.6 15C4.73314 15.5236 4.77286 16.0671 4.71756 16.6036C4.66226 17.1401 4.51284 17.6606 4.27703 18.1386C4.04122 18.6166 3.72317 19.0442 3.3395 19.3997C2.95583 19.7553 2.51306 20.0325 2.03517 20.2172L5.4 22L8 19.4L6.4 17.8" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.6 9C4.46686 8.47641 4.42714 7.93294 4.48244 7.39641C4.53774 6.85988 4.68716 6.33944 4.92297 5.86143C5.15878 5.38342 5.47683 4.95584 5.8605 4.60027C6.24417 4.2447 6.68694 3.96753 7.16483 3.7828L4.6 2L2 4.6L3.6 6.2" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.4 9C19.5331 8.47641 19.5729 7.93294 19.5176 7.39641C19.4623 6.85988 19.3128 6.33944 19.077 5.86143C18.8412 5.38342 18.5232 4.95584 18.1395 4.60027C17.7558 4.2447 17.3131 3.96753 16.8352 3.7828L19.4 2L22 4.6L20.4 6.2" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Institutional APIs</h3>
+                        <p>Robust API infrastructure designed for enterprise-grade integration and automation.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V12" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 11V17" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 14H15" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 5C16 6.65685 14.6569 8 13 8C11.3431 8 10 6.65685 10 5C10 3.34315 11.3431 2 13 2C14.6569 2 16 3.34315 16 5Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Privacy-Preserving Analytics</h3>
+                        <p>Gain insights without compromising privacy through our zero-knowledge analytics platform.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00208 12 2.00208C11.6489 2.00208 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.27002 6.96002L12 12L20.73 6.96002" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 22.08V12" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Developer Sandbox</h3>
+                        <p>Test and build applications with our comprehensive development environment and SDKs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Visualization -->
+        <section class="data-viz-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Idle BTC vs Activated BTC</h2>
+                    <p>Simulated data showing potential impact of liquidity activation</p>
+                </div>
+                
+                <div class="data-viz">
+                    <div class="chart-container">
+                        <canvas id="btcChart" width="600" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Simple, Transparent Pricing</h2>
+                    <p>Choose the plan that works for you</p>
+                </div>
+                
+                <div class="pricing-toggle">
+                    <span>Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pricing-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Annual <small>(Save 20%)</small></span>
+                </div>
+                
+                <div class="pricing-cards">
+                    <div class="card pricing-card">
+                        <h3>Founders</h3>
+                        <div class="price">$0<span class="price-period">/month</span></div>
+                        <p>Perfect for early-stage projects and developers</p>
+                        <ul class="pricing-features">
+                            <li>Waitlist access</li>
+                            <li>Basic documentation</li>
+                            <li>Community support</li>
+                            <li>Limited API calls</li>
+                        </ul>
+                        <a href="#early-access" class="btn btn-outline" style="width: 100%;">Join Waitlist</a>
+                    </div>
+                    
+                    <div class="card pricing-card featured">
+                        <h3>Pro</h3>
+                        <div class="price">$299<span class="price-period">/month</span></div>
+                        <p>For growing businesses and professional traders</p>
+                        <ul class="pricing-features">
+                            <li>Priority API access</li>
+                            <li>Higher rate limits</li>
+                            <li>Email support</li>
+                            <li>Advanced analytics</li>
+                            <li>Webhook integrations</li>
+                        </ul>
+                        <a href="#early-access" class="btn btn-primary" style="width: 100%;">Get Started</a>
+                    </div>
+                    
+                    <div class="card pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">Custom<span class="price-period">pricing</span></div>
+                        <p>For institutions requiring dedicated infrastructure</p>
+                        <ul class="pricing-features">
+                            <li>Custom SLAs</li>
+                            <li>On-premise options</li>
+                            <li>Dedicated support</li>
+                            <li>White-label solutions</li>
+                            <li>Training & onboarding</li>
+                        </ul>
+                        <a href="#early-access" class="btn btn-outline" style="width: 100%;">Talk to Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Trusted by Industry Leaders</h2>
+                </div>
+                
+                <div class="testimonials-container">
+                    <div class="card">
+                        <img src="/assets/testimonial-1.jpg" alt="Portrait of Alex Johnson, Crypto Fund Manager" class="testimonial-avatar">
+                        <div class="testimonial-text">
+                            "BlocentraAI has fundamentally changed how we manage our Bitcoin treasury. The AI-driven insights have increased our yield by 37% while maintaining our strict security standards."
+                        </div>
+                        <div class="testimonial-author">Alex Johnson</div>
+                        <div class="testimonial-role">Crypto Fund Manager</div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/assets/testimonial-2.jpg" alt="Portrait of Maria Rodriguez, CTO at Blockchain Startup" class="testimonial-avatar">
+                        <div class="testimonial-text">
+                            "The non-custodial approach was the deciding factor for us. We maintain control of our assets while accessing liquidity we didn't know was possible to unlock."
+                        </div>
+                        <div class="testimonial-author">Maria Rodriguez</div>
+                        <div class="testimonial-role">CTO at Blockchain Startup</div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/assets/testimonial-3.jpg" alt="Portrait of James Chen, DeFi Researcher" class="testimonial-avatar">
+                        <div class="testimonial-text">
+                            "This is the missing piece for Bitcoin DeFi. The cross-chain routing technology is years ahead of anything else I've seen in the space."
+                        </div>
+                        <div class="testimonial-author">James Chen</div>
+                        <div class="testimonial-role">DeFi Researcher</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ -->
+        <section id="faq" class="faq">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is BlocentraAI custodial?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, BlocentraAI is completely non-custodial. We never hold your Bitcoin or private keys. Our technology enables liquidity activation through smart contracts and cross-chain bridges while you maintain full control of your assets.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do you 'unlock' idle BTC safely?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our AI engine analyzes on-chain patterns to identify optimal liquidity pathways. These routes are then rigorously tested for security and efficiency. Once a safe route is identified, we use non-custodial smart contracts to activate liquidity without transferring asset custody.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Which chains/wallets are supported first?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We're initially supporting Bitcoin, Ethereum, and Polygon networks, with more chains being added quarterly. For wallets, we support all major non-custodial options including MetaMask, Ledger, Trezor, and WalletConnect-compatible wallets.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What's your business model?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We charge a small percentage fee on successfully activated liquidity routes. There are no hidden fees or upfront costs. Our free tier allows developers to experiment with our API, while professional and enterprise plans offer higher limits and additional features.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Security & audits?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Security is our top priority. All our smart contracts undergo rigorous auditing by leading security firms. We also have a bug bounty program and maintain comprehensive insurance coverage. Our architecture is designed with multiple layers of security and failsafes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Compliance considerations?
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We've built compliance into our core architecture. Our system includes built-in AML/KYC checks where required, travel rule compliance, and works closely with regulators to ensure our technology meets all legal requirements. We prioritize privacy while maintaining regulatory compliance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section id="early-access" class="cta">
+            <div class="container">
+                <h2>Get Early Access</h2>
+                <p>Join the waitlist to be among the first to experience BlocentraAI</p>
+                
+                <form class="cta-form" id="early-access-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Company (Optional)</label>
+                        <input type="text" id="company" class="form-input">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-outline" style="background: white; color: var(--primary); margin-top: 1rem;">
+                        Get Early Access + Whitepaper
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <a href="#" class="logo">Blocentra<span>AI</span></a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Whitepaper</a></li>
+                        <li><a href="#">Status</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Connect</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23 3.01006C22.0424 3.68553 20.9821 4.20217 19.86 4.54006C19.2577 3.84757 18.4573 3.35675 17.567 3.13398C16.6767 2.91122 15.7395 2.96725 14.8821 3.29451C14.0247 3.62177 13.2884 4.20446 12.773 4.96377C12.2575 5.72309 11.9877 6.62239 12 7.54006V8.54006C10.2426 8.58562 8.50127 8.19587 6.93101 7.4055C5.36074 6.61513 4.01032 5.44869 3 4.01006C3 4.01006 -1 13.0101 8 17.0101C5.94053 18.408 3.48716 19.109 1 19.0101C10 24.0101 21 19.0101 21 7.51006C20.9991 7.23151 20.9723 6.95365 20.92 6.68006C21.9406 5.67355 22.6608 4.40277 23 3.01006Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 9H2V21H6V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 0.999999C19.91 0.999999 18.73 0.649999 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.649999 5.09 0.999999 5.09 0.999999C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; <span id="current-year"></span> BlocentraAI. All rights reserved. <span style="margin-left: 1rem;">Made with ♥ in San Francisco</span></p>
+                    
+                    <div class="language-selector">
+                        <select aria-label="Select language">
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="zh">中文</option>
+                            <option value="ja">日本語</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    
+    <div class="toast" id="toast" aria-live="polite" role="status"></div>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "BlocentraAI",
+        "url": "https://blocentra.ai",
+        "logo": "https://blocentra.ai/assets/logo.svg",
+        "description": "BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "San Francisco",
+            "addressRegion": "CA",
+            "addressCountry": "USA"
+        },
+        "sameAs": [
+            "https://twitter.com/blocentraai",
+            "https://linkedin.com/company/blocentraai",
+            "https://github.com/blocentraai"
+        ]
+    }
+    </script>
+    
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Theme Toggle Functionality
+            const themeToggle = document.querySelector('.theme-toggle');
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            
+            // Set initial theme
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // Track theme change
+                track('theme_toggle', { theme: newTheme });
+            });
+            
+            // Mobile Navigation Toggle
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            mobileToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileToggle.setAttribute('aria-expanded', 
+                    navMenu.classList.contains('active') ? 'true' : 'false');
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        navMenu.classList.remove('active');
+                        
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update URL without scrolling
+                        history.pushState(null, null, targetId);
+                        
+                        // Track navigation click
+                        track('nav_click', { target: targetId });
+                    }
+                });
+            });
+            
+            // Active link highlighting with IntersectionObserver
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Animated counters for metrics
+            const counters = document.querySelectorAll('.metric-value');
+            let hasCounted = false;
+            
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasCounted) {
+                        hasCounted = true;
+                        
+                        // Wallet counter
+                        animateCounter('wallets-analyzed', 0, 12478, 2000);
+                        
+                        // Liquidity routes counter
+                        animateCounter('liquidity-routes', 0, 35642, 2000);
+                        
+                        // Unlock score counter
+                        animateCounter('unlock-score', 0, 97, 2000, true);
+                        
+                        // Track metrics view
+                        track('metrics_view', { section: 'metrics' });
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counterObserver.observe(document.querySelector('.metrics'));
+            
+            function animateCounter(elementId, start, end, duration, isPercentage = false) {
+                const element = document.getElementById(elementId);
+                let startTimestamp = null;
+                
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    
+                    const value = Math.floor(progress * (end - start) + start);
+                    element.textContent = isPercentage ? `${value}%` : value.toLocaleString();
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                
+                window.requestAnimationFrame(step);
+            }
+            
+            // How It Works accordion functionality
+            const stepCards = document.querySelectorAll('.step-card');
+            
+            stepCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const isActive = card.classList.contains('active');
+                    
+                    // Close all cards
+                    stepCards.forEach(c => c.classList.remove('active'));
+                    
+                    // Open clicked card if it wasn't already active
+                    if (!isActive) {
+                        card.classList.add('active');
+                        track('step_card_open', { step: card.querySelector('.step-number').textContent });
+                    }
+                });
+                
+                // Keyboard accessibility
+                card.setAttribute('tabindex', '0');
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+            
+            // Pricing toggle functionality
+            const pricingToggle = document.getElementById('pricing-toggle');
+            const priceElements = document.querySelectorAll('.price');
+            const pricePeriods = document.querySelectorAll('.price-period');
+            
+            pricingToggle.addEventListener('change', () => {
+                if (pricingToggle.checked) {
+                    // Annual pricing (20% discount)
+                    priceElements[1].innerHTML = '$239<span class="price-period">/month</span>';
+                    pricePeriods[1].textContent = 'billed annually';
+                } else {
+                    // Monthly pricing
+                    priceElements[1].innerHTML = '$299<span class="price-period">/month</span>';
+                    pricePeriods[1].textContent = '/month';
+                }
+                
+                track('pricing_toggle', { 
+                    mode: pricingToggle.checked ? 'annual' : 'monthly' 
+                });
+            });
+            
+            // FAQ accordion functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all items
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Open clicked item if it wasn't already active
+                    if (!isActive) {
+                        item.classList.add('active');
+                        track('faq_open', { 
+                            question: question.textContent.trim() 
+                        });
+                    }
+                });
+                
+                // Keyboard accessibility
+                question.setAttribute('tabindex', '0');
+                question.setAttribute('aria-expanded', 'false');
+                question.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        question.click();
+                    }
+                });
+            });
+            
+            // Email form validation and submission
+            const earlyAccessForm = document.getElementById('early-access-form');
+            const toast = document.getElementById('toast');
+            
+            earlyAccessForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const nameInput = document.getElementById('name');
+                const emailInput = document.getElementById('email');
+                const companyInput = document.getElementById('company');
+                
+                let isValid = true;
+                
+                // Simple validation
+                if (!nameInput.value.trim()) {
+                    showError(nameInput, 'Name is required');
+                    isValid = false;
+                } else {
+                    clearError(nameInput);
+                }
+                
+                if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+                    showError(emailInput, 'Valid email is required');
+                    isValid = false;
+                } else {
+                    clearError(emailInput);
+                }
+                
+                if (isValid) {
+                    // Simulate form submission
+                    const formData = {
+                        name: nameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                        company: companyInput.value.trim(),
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Show success message
+                    showToast('Success! Thank you for joining our waitlist. We\'ll be in touch soon.', 'success');
+                    
+                    // Track form submission
+                    track('lead_submit', formData);
+                    
+                    // Reset form
+                    earlyAccessForm.reset();
+                }
+            });
+            
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            function showError(input, message) {
+                clearError(input);
+                
+                const error = document.createElement('div');
+                error.className = 'error-message';
+                error.textContent = message;
+                error.style.color = 'var(--danger)';
+                error.style.fontSize = '0.875rem';
+                error.style.marginTop = '0.25rem';
+                
+                input.parentNode.appendChild(error);
+                input.style.borderColor = 'var(--danger)';
+            }
+            
+            function clearError(input) {
+                const error = input.parentNode.querySelector('.error-message');
+                if (error) {
+                    error.remove();
+                }
+                input.style.borderColor = '';
+            }
+            
+            function showToast(message, type = 'success') {
+                toast.textContent = message;
+                toast.className = `toast ${type} show`;
+                
+                setTimeout(() => {
+                    toast.className = 'toast';
+                }, 5000);
+            }
+            
+            // Simple analytics tracking function
+            window.track = function(event, data = {}) {
+                // In a real implementation, this would send data to analytics service
+                console.log('Tracking:', event, data);
+                
+                // Simulate sending data
+                const analyticsData = {
+                    event,
+                    data,
+                    timestamp: new Date().toISOString(),
+                    url: window.location.href,
+                    userAgent: navigator.userAgent
+                };
+                
+                // Here you would typically send analyticsData to your analytics endpoint
+                // Example: fetch('/api/analytics', { method: 'POST', body: JSON.stringify(analyticsData) });
+            };
+            
+            // Initialize simple chart
+            initChart();
+            
+            function initChart() {
+                const canvas = document.getElementById('btcChart');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw simple chart
+                ctx.beginPath();
+                ctx.moveTo(50, height - 50);
+                
+                // Idle BTC line (red)
+                ctx.lineTo(width - 50, 100);
+                ctx.strokeStyle = 'var(--danger)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                // Activated BTC line (green)
+                ctx.beginPath();
+                ctx.moveTo(50, height - 50);
+                ctx.lineTo(width - 50, 200);
+                ctx.strokeStyle = 'var(--success)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                // Draw axes
+                ctx.beginPath();
+                ctx.moveTo(50, 50);
+                ctx.lineTo(50, height - 50);
+                ctx.lineTo(width - 50, height - 50);
+                ctx.strokeStyle = 'var(--muted)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Add labels
+                ctx.fillStyle = 'var(--text)';
+                ctx.font = '14px var(--font-body)';
+                ctx.fillText('Idle BTC', width - 100, 90);
+                ctx.fillText('Activated BTC', width - 100, 190);
+                ctx.fillText('Time', width / 2, height - 20);
+                
+                // Draw legend
+                ctx.fillStyle = 'var(--danger)';
+                ctx.fillRect(60, 30, 20, 3);
+                ctx.fillStyle = 'var(--text)';
+                ctx.fillText('Idle BTC', 90, 35);
+                
+                ctx.fillStyle = 'var(--success)';
+                ctx.fillRect(160, 30, 20, 3);
+                ctx.fillStyle = 'var(--text)';
+                ctx.fillText('Activated BTC', 190, 35);
+            }
+            
+            // Lazy loading for images
+            if ('loading' in HTMLImageElement.prototype) {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                images.forEach(img => {
+                    img.loading = 'lazy';
+                });
+            }
+            
+            // Register service worker for PWA (simplified)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    // In a real implementation, you would register your service worker here
+                    // navigator.serviceWorker.register('/sw.js');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
