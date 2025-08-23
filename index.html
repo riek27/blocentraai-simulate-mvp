@@ -1,1397 +1,677 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlocentraAI - Bitcoin Protection & Yield</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0c1e3d;
-            --secondary: #1d3d78;
-            --accent: #00d9b0;
-            --accent-dark: #00b897;
-            --light: #f0f8ff;
-            --dark: #091428;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --danger: #f44336;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.1);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
-            color: var(--light);
-            min-height: 100vh;
-            padding-bottom: 2rem;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            background: rgba(12, 30, 61, 0.97);
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-        
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .logo-text span {
-            color: var(--accent);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding: 5px 0;
-        }
-        
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-        
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-        
-        .hero {
-            padding: 6rem 0 4rem;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .hero:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 217, 176, 0.15) 0%, rgba(0, 217, 176, 0) 70%);
-            z-index: -1;
-        }
-        
-        .hero h1 {
-            font-size: 3.8rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(to right, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            opacity: 0.85;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .tagline {
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            font-size: 1rem;
-        }
-        
-        .cta-button {
-            background: linear-gradient(to right, var(--accent), var(--accent-dark));
-            color: var(--dark);
-            border: none;
-            padding: 14px 36px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 217, 176, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-100%);
-            transition: transform 0.4s;
-        }
-        
-        .cta-button:hover:after {
-            transform: translateX(0);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 217, 176, 0.4);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin: 5rem 0 3rem;
-            font-size: 2.5rem;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-            font-size: 1.2rem;
-            opacity: 0.8;
-            line-height: 1.6;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin: 4rem 0;
-        }
-        
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.4s, box-shadow 0.4s;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .product-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(0, 217, 176, 0.1), transparent 70%);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
-            border-color: rgba(0, 217, 176, 0.3);
-        }
-        
-        .product-card:hover:before {
-            opacity: 1;
-        }
-        
-        .card-header {
-            padding: 1.8rem;
-            background: rgba(0, 217, 176, 0.08);
-            border-bottom: 1px solid var(--card-border);
-        }
-        
-        .card-icon {
-            font-size: 2.8rem;
-            color: var(--accent);
-            margin-bottom: 1.2rem;
-        }
-        
-        .card-title {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .card-subtitle {
-            opacity: 0.8;
-            font-size: 1rem;
-        }
-        
-        .card-body {
-            padding: 1.8rem;
-        }
-        
-        .card-features {
-            list-style: none;
-            margin: 1.2rem 0;
-        }
-        
-        .card-features li {
-            padding: 10px 0;
-            display: flex;
-            align-items: flex-start;
-            font-size: 1.05rem;
-        }
-        
-        .card-features li:before {
-            content: '✓';
-            color: var(--accent);
-            margin-right: 12px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-        
-        .status-active {
-            background: rgba(76, 175, 80, 0.2);
-            color: var(--success);
-        }
-        
-        .status-dev {
-            background: rgba(255, 152, 0, 0.2);
-            color: var(--warning);
-        }
-        
-        .status-planned {
-            background: rgba(66, 133, 244, 0.2);
-            color: #4285f4;
-        }
-        
-        .simulation-container {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin: 4rem 0;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .simulation-container:before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 217, 176, 0.1) 0%, rgba(0, 217, 176, 0) 70%);
-            z-index: 1;
-        }
-        
-        .simulation-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.8rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .simulation-title {
-            font-size: 1.8rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-        
-        .simulation-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        @media (max-width: 768px) {
-            .simulation-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .input-group {
-            margin-bottom: 1.8rem;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-        
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 10px;
-            color: white;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-        }
-        
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 217, 176, 0.2);
-        }
-        
-        .result-box {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 12px;
-            padding: 1.8rem;
-            height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .result-title {
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .risk-meter {
-            height: 24px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            margin: 1.8rem 0;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .risk-level {
-            height: 100%;
-            border-radius: 12px;
-            transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
-        
-        .risk-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-        
-        .metric {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 1.1rem;
-        }
-        
-        .metric-value {
-            font-weight: 600;
-        }
-        
-        .hybrid-demo {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin: 4rem 0;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hybrid-demo:before {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 217, 176, 0.1) 0%, rgba(0, 217, 176, 0) 70%);
-            z-index: 1;
-        }
-        
-        .demo-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .demo-title {
-            font-size: 2.2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        
-        .demo-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .demo-steps {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin: 4rem 0;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .demo-steps:before {
-            content: '';
-            position: absolute;
-            top: 50px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: 1;
-        }
-        
-        .step {
-            text-align: center;
-            width: 20%;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .step-icon {
-            width: 100px;
-            height: 100px;
-            background: rgba(0, 217, 176, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            border: 2px solid var(--accent);
-            font-size: 2.5rem;
-            color: var(--accent);
-            transition: all 0.4s;
-        }
-        
-        .step.active .step-icon {
-            background: rgba(0, 217, 176, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(0, 217, 176, 0.3);
-        }
-        
-        .step-number {
-            display: block;
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            color: var(--dark);
-            border-radius: 50%;
-            line-height: 40px;
-            position: absolute;
-            top: -15px;
-            right: 0;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .step-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .step-desc {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-        
-        .demo-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-            margin-top: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .demo-visual {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 16px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .demo-chart {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .demo-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 3rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .demo-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .demo-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .demo-btn.primary {
-            background: linear-gradient(to right, var(--accent), var(--accent-dark));
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        .demo-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 217, 176, 0.3);
-        }
-        
-        .roadmap {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin: 4rem 0;
-        }
-        
-        .roadmap-item {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            border-left: 5px solid var(--accent);
-            transition: transform 0.4s;
-        }
-        
-        .roadmap-item:hover {
-            transform: translateY(-8px);
-        }
-        
-        .roadmap-phase {
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-        }
-        
-        .roadmap-title {
-            font-size: 1.6rem;
-            margin-bottom: 1.2rem;
-        }
-        
-        .roadmap-features {
-            list-style: none;
-            margin-top: 1.2rem;
-        }
-        
-        .roadmap-features li {
-            padding: 8px 0;
-            display: flex;
-            font-size: 1.05rem;
-        }
-        
-        .roadmap-features li:before {
-            content: '•';
-            color: var(--accent);
-            margin-right: 12px;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px 20px;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        
-        .contact-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        .contact-icon {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 4rem 0 3rem;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-        
-        .footer-logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer-logo span {
-            color: var(--accent);
-        }
-        
-        .footer-tagline {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            opacity: 0.8;
-        }
-        
-        .copyright {
-            opacity: 0.7;
-            margin-top: 2rem;
-            font-size: 0.95rem;
-        }
-        
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-        
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            opacity: 0.1;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-20px) translateX(20px); }
-            100% { transform: translateY(0) translateX(0); }
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .nav-links {
-                gap: 1.2rem;
-            }
-            
-            .demo-steps {
-                flex-direction: column;
-                gap: 3rem;
-            }
-            
-            .step {
-                width: 100%;
-            }
-            
-            .demo-steps:before {
-                display: none;
-            }
-            
-            .demo-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .us-flag {
-            display: inline-block;
-            position: relative;
-            margin-left: 10px;
-            width: 24px;
-            height: 16px;
-            background: linear-gradient(to bottom, 
-                #b22234 0%, #b22234 30%, 
-                white 30%, white 40%, 
-                #3c3b6e 40%, #3c3b6e 70%, 
-                white 70%, white 80%, 
-                #b22234 80%, #b22234 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-        }
-        
-        .us-flag:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 40%;
-            height: 54%;
-            background: #3c3b6e;
-        }
-        
-        .us-flag:after {
-            content: '★';
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            color: white;
-            font-size: 5px;
-            line-height: 1;
-            text-shadow: 
-                1px 1px 0 #3c3b6e,
-                2px 2px 0 #3c3b6e,
-                3px 3px 0 #3c3b6e;
-        }
-        
-        .location-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(60, 59, 110, 0.2);
-            color: #b22234;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-left: 15px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BlocentraAI — Unlock 99% of Idle Bitcoin with AI</title>
+  <meta name="description" content="BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains. Join the early access list." />
+  <meta name="keywords" content="Bitcoin, BTC, liquidity, AI, blockchain, DeFi, crypto, cross-chain, non-custodial" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BlocentraAI" />
+  <meta property="og:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI" />
+  <meta property="og:description" content="BlocentraAI uses a self-learning hybrid AI to transform dormant BTC into secure, active liquidity across chains." />
+  <meta property="og:image" content="/assets/og-cover.png" />
+  <meta property="og:url" content="https://example.com/" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BlocentraAI — Unlock 99% of Idle Bitcoin with AI" />
+  <meta name="twitter:description" content="Self-learning AI that unlocks idle Bitcoin liquidity across ecosystems." />
+  <meta name="twitter:image" content="/assets/og-cover.png" />
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://example.com/" />
+
+  <meta name="theme-color" content="#0B0F19" />
+
+  <style>
+    /* ===========================
+       Base, Reset, Variables
+       =========================== */
+    :root {
+      --bg: #0B0F19;
+      --surface: #121826;
+      --muted-surface: #0f1422;
+      --primary: #4F46E5; /* indigo */
+      --primary-2: #22D3EE; /* cyan */
+      --text: #E5E7EB; /* gray-200 */
+      --muted: #9CA3AF; /* gray-400 */
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --ring: rgba(79,70,229,.5);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+
+      --radius-xl: 1.25rem;
+      --radius-2xl: 1.5rem;
+      --nav-h: 72px;
+      --maxw: 1200px;
+    }
+    [data-theme="light"]{
+      --bg:#F7F8FB;
+      --surface:#FFFFFF;
+      --muted-surface:#F2F4F8;
+      --text:#0B1221;
+      --muted:#4B5563;
+      --shadow: 0 10px 30px rgba(2,6,23,.08);
+      --ring: rgba(34,211,238,.45);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -20%, rgba(79,70,229,.15), transparent 60%),
+                  radial-gradient(1000px 700px at -10% 20%, rgba(34,211,238,.12), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding: 0 20px; }
+
+    /* ===========================
+       Utilities
+       =========================== */
+    .visually-hidden {
+      position: absolute !important; height: 1px; width: 1px; overflow: hidden;
+      clip: rect(1px,1px,1px,1px); white-space: nowrap; clip-path: inset(50%);
+    }
+    .card {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%)) padding-box,
+                  linear-gradient(135deg, color-mix(in srgb, var(--primary), transparent 35%), color-mix(in srgb, var(--primary-2), transparent 35%)) border-box;
+      border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: saturate(140%) blur(8px);
+    }
+    .pill {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background: color-mix(in srgb, var(--primary), transparent 80%);
+      color: var(--text);
+      padding: .35rem .7rem; border-radius: 999px; font-size: .8rem;
+    }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+      padding: .9rem 1.15rem; border-radius: 999px; border: 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white; box-shadow: 0 8px 24px rgba(79,70,229,.3);
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(79,70,229,.35); }
+    .btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid color-mix(in srgb, var(--text), transparent 75%);
+    }
+    .grid { display:grid; gap: 1.25rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    @media (max-width: 900px){
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ===========================
+       Skip link
+       =========================== */
+    .skip { position: absolute; left: -9999px; top: -9999px; }
+    .skip:focus { left: 16px; top: 16px; z-index: 9999; background: black; color: white; padding: .5rem .75rem; border-radius: .5rem; }
+
+    /* ===========================
+       Nav
+       =========================== */
+    .nav {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: color-mix(in srgb, var(--bg), transparent 10%);
+      border-bottom: 1px solid color-mix(in srgb, var(--text), transparent 90%);
+      height: var(--nav-h);
+    }
+    .nav-inner {
+      height: 100%; display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand { display:flex; align-items:center; gap:.7rem; font-weight:700; letter-spacing:.2px; }
+    .brand svg { width: 28px; height: 28px; }
+    .nav-links { display:flex; align-items:center; gap: 1rem; }
+    .nav-links a {
+      padding:.5rem .75rem; border-radius: .6rem; color: var(--muted);
+    }
+    .nav-links a.active, .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--text), transparent 92%); }
+    .theme-toggle {
+      padding:.55rem .7rem; border-radius: .7rem; border:1px solid color-mix(in srgb, var(--text), transparent 80%);
+      background: color-mix(in srgb, var(--surface), transparent 5%);
+      color: var(--text);
+    }
+
+    /* ===========================
+       Sections
+       =========================== */
+    section { padding: clamp(56px, 8vw, 100px) 0; }
+    .section-head {
+      display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin-bottom: 1.25rem;
+    }
+    .kicker { color: var(--primary-2); font-weight:600; letter-spacing: .6px; text-transform: uppercase; font-size:.8rem; }
+    h1, h2, h3 { line-height: 1.2; margin: .35rem 0 .6rem; }
+    h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    h3 { font-size: 1.1rem; }
+
+    /* ===========================
+       Hero
+       =========================== */
+    .hero { padding-top: 24px; }
+    .hero-wrap { display:grid; gap: 2rem; grid-template-columns: 1.15fr .85fr; align-items:center; }
+    @media (max-width: 1000px){ .hero-wrap { grid-template-columns: 1fr; } }
+    .hero .subtitle { color: var(--muted); max-width: 56ch; }
+    .cta-row { display:flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .trust { display:flex; gap:.6rem; flex-wrap:wrap; margin-top: .8rem; color: var(--muted); font-size:.9rem; }
+    .hero-visual {
+      position: relative; aspect-ratio: 4/3; border-radius: var(--radius-2xl); overflow: hidden;
+      background:
+        radial-gradient(120% 120% at 80% 10%, color-mix(in srgb, var(--primary), transparent 55%), transparent 60%),
+        radial-gradient(120% 120% at 10% 90%, color-mix(in srgb, var(--primary-2), transparent 55%), transparent 60%),
+        linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%));
+      border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+      box-shadow: var(--shadow);
+    }
+    .mesh {
+      position:absolute; inset:0; opacity:.7;
+      background:
+        radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,.06), transparent 60%),
+        conic-gradient(from 0deg at 50% 50%, rgba(79,70,229,.25), rgba(34,211,238,.2), rgba(79,70,229,.25));
+      mix-blend-mode: screen;
+    }
+    .overlay-card {
+      position:absolute; right: 6%; top: 8%;
+      background: color-mix(in srgb, var(--surface), transparent 10%);
+      border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
+      border-radius: 1rem; padding: .8rem .9rem; min-width: 220px; box-shadow: var(--shadow);
+    }
+    .overlay-card small { color: var(--muted); }
+
+    /* ===========================
+       Logos
+       =========================== */
+    .logos { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 1.25rem; align-items:center; opacity:.9; }
+    .logos img { filter: grayscale(100%); opacity:.7; height: 26px; margin-inline: auto; }
+    @media (max-width: 800px){ .logos { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ===========================
+       Split Problem/Solution
+       =========================== */
+    .split { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+    @media (max-width: 900px){ .split { grid-template-columns: 1fr; } }
+    .bullet { display:flex; align-items:flex-start; gap:.7rem; }
+    .bullet svg { flex:0 0 auto; margin-top:.2rem; }
+
+    /* ===========================
+       Steps (accordion cards)
+       =========================== */
+    .steps { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+    @media (max-width: 900px){ .steps { grid-template-columns: 1fr; } }
+    .step {
+      border-radius: var(--radius-xl); padding: 1rem; border: 1px solid color-mix(in srgb, var(--text), transparent 85%);
+      background: color-mix(in srgb, var(--surface), transparent 0%);
+      transition: transform .2s ease;
+    }
+    .step[open] { transform: translateY(-2px); }
+    .step > summary {
+      list-style: none; cursor: pointer; display:flex; align-items:center; gap:.75rem; padding:.4rem;
+    }
+    .step > summary::-webkit-details-marker { display:none; }
+    .badge { background: color-mix(in srgb, var(--primary-2), transparent 70%); color: var(--text); padding:.25rem .55rem; border-radius:.6rem; font-size:.8rem; }
+
+    /* ===========================
+       KPI counter strip
+       =========================== */
+    .strip {
+      display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .8rem;
+      background: color-mix(in srgb, var(--surface), transparent 0%); border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+      padding: 1rem; border-radius: var(--radius-2xl);
+    }
+    @media (max-width: 800px){ .strip { grid-template-columns: 1fr; } }
+    .kpi { text-align:center; padding: .6rem .4rem; }
+    .kpi .num { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: .5px; }
+
+    /* ===========================
+       Features
+       =========================== */
+    .feature { padding: 1rem; border: 1px solid color-mix(in srgb, var(--text), transparent 88%); border-radius: var(--radius-xl); background: color-mix(in srgb, var(--surface), transparent 0%); }
+
+    /* ===========================
+       Chart
+       =========================== */
+    .chart-wrap {
+      padding: 1rem; border-radius: var(--radius-2xl);
+      border: 1px solid color-mix(in srgb, var(--text), transparent 88%);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--surface), transparent 0%), color-mix(in srgb, var(--surface), transparent 0%));
+    }
+
+    /* ===========================
+       Pricing
+       =========================== */
+    .toggle {
+      display:inline-flex; gap:.4rem; align-items:center; border:1px solid color-mix(in srgb,var(--text),transparent 85%);
+      border-radius:999px; padding:.25rem; background: color-mix(in srgb, var(--surface), transparent 5%);
+    }
+    .toggle button { border-radius:999px; padding:.45rem .8rem; border:0; background: transparent; color: var(--muted); }
+    .toggle button.active { background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: white; }
+    .pricing { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+    @media (max-width: 900px){ .pricing { grid-template-columns: 1fr; } }
+    .price-card { padding: 1.2rem; border: 1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: var(--radius-2xl); background: color-mix(in srgb, var(--surface), transparent 0%); position:relative; }
+    .price-card.highlight { outline: 2px solid color-mix(in srgb, var(--primary), transparent 10%); box-shadow: 0 10px 30px rgba(79,70,229,.15); }
+    .price { font-size: 2rem; font-weight: 800; margin:.3rem 0; }
+
+    /* ===========================
+       Testimonials
+       =========================== */
+    .testimonials { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+    @media (max-width: 900px){ .testimonials { grid-template-columns: 1fr; } }
+    .testimonial { padding: 1rem; border:1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: var(--radius-xl); background: color-mix(in srgb, var(--surface), transparent 0%); }
+    .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+
+    /* ===========================
+       FAQ
+       =========================== */
+    .faq { display:grid; gap: .75rem; }
+    .faq details { border:1px solid color-mix(in srgb, var(--text), transparent 85%); border-radius: .9rem; background: color-mix(in srgb, var(--surface), transparent 0%); padding:.6rem .8rem; }
+    .faq summary { cursor:pointer; list-style:none; font-weight:600; }
+    .faq summary::-webkit-details-marker { display:none; }
+
+    /* ===========================
+       Form
+       =========================== */
+    form { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:.75rem; }
+    @media (max-width: 900px){ form { grid-template-columns: 1fr; } }
+    input, select {
+      padding: .9rem .9rem; border-radius: .8rem; border:1px solid color-mix(in srgb, var(--text), transparent 85%);
+      background: color-mix(in srgb, var(--surface), transparent 0%); color: var(--text);
+    }
+    input:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+    /* ===========================
+       Footer
+       =========================== */
+    footer { padding: 60px 0; background: linear-gradient(180deg, color-mix(in srgb, var(--muted-surface), transparent 0%), transparent); border-top: 1px solid color-mix(in srgb, var(--text), transparent 90%); }
+    .footer-grid { display:grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 1rem; }
+    @media (max-width: 900px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+    .subtle { color: var(--muted); }
+
+    /* ===========================
+       Reveal Animations
+       =========================== */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn, .step, .reveal { transition: none !important; }
+    }
+  </style>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"BlocentraAI",
+    "url":"https://example.com/",
+    "logo":"https://example.com/assets/favicon.svg",
+    "sameAs":[]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Product",
+    "name":"BlocentraAI Liquidity AI",
+    "description":"Self-learning hybrid AI that unlocks idle Bitcoin liquidity across chains via non-custodial, risk-aware routing.",
+    "brand":{"@type":"Brand","name":"BlocentraAI"}
+  }
+  </script>
 </head>
+
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="bg-circle" style="width: 500px; height: 500px; top: 10%; left: 5%; animation: float 12s infinite ease-in-out;"></div>
-        <div class="bg-circle" style="width: 300px; height: 300px; top: 60%; left: 80%; animation: float 15s infinite ease-in-out;"></div>
-        <div class="bg-circle" style="width: 400px; height: 400px; top: 30%; left: 70%; animation: float 18s infinite ease-in-out;"></div>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <header class="nav" role="banner">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="BlocentraAI home">
+        <!-- Inline logo -->
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#22D3EE"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#g)"/>
+          <path d="M24 11c7 0 12 5 12 12s-5 12-12 12S12 30 12 23" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="24" cy="23" r="4" fill="white"/>
+        </svg>
+        BlocentraAI
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how" data-nav>How it works</a>
+        <a href="#features" data-nav>Features</a>
+        <a href="#pricing" data-nav>Pricing</a>
+        <a href="#faq" data-nav>FAQ</a>
+        <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
+      </nav>
     </div>
-    
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-shield-alt logo-icon"></i>
-                    <div class="logo-text">Bloc<span>entra</span>AI</div>
-                    <div class="location-badge">
-                        <i class="fas fa-map-marker-alt"></i> SF, CA
-                    </div>
-                </div>
-                <div class="nav-links">
-                    <a href="#products">Products</a>
-                    <a href="#simulation">Risk Analysis</a>
-                    <a href="#hybrid">Hybrid Model</a>
-                    <a href="#roadmap">Roadmap</a>
-                    <a href="#contact">Contact</a>
-                </div>
-            </div>
-        </div>
-    </header>
+  </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="tagline">AI-Powered Bitcoin Protection & Yield</div>
-            <h1>Secure Your Bitcoin with Institutional-Grade Protection</h1>
-            <p>BlocentraAI provides cutting-edge security, AI-driven risk intelligence, and capital activation tools for Bitcoin holders. Headquartered in San Francisco, we're building the future of Bitcoin financial infrastructure.</p>
-            <button class="cta-button">Request Early Access</button>
+  <main id="main" tabindex="-1">
+    <!-- HERO -->
+    <section id="home" class="hero container">
+      <div class="hero-wrap">
+        <div class="reveal">
+          <span class="pill" aria-hidden="true">AI-driven • Non-custodial • Cross-chain</span>
+          <h1>Unlock 99% of idle Bitcoin with self-learning AI</h1>
+          <p class="subtitle">BlocentraAI transforms dormant BTC into active, secure liquidity across ecosystems.</p>
+          <div class="cta-row">
+            <a class="btn" href="#lead" aria-label="Get Early Access">Get Early Access</a>
+            <a class="btn btn-outline" href="#" aria-label="Read the whitepaper (opens soon)">Read the Whitepaper</a>
+          </div>
+          <div class="trust" role="text">
+            <span>Backed by cryptography</span> • <span>AI-driven</span> • <span>Non-custodial integrations</span>
+          </div>
         </div>
+        <figure class="hero-visual reveal" aria-label="Abstract visualization of Bitcoin and AI network">
+          <div class="mesh" aria-hidden="true"></div>
+          <figcaption class="visually-hidden">Abstract Bitcoin coin mesh and neural network lines with glassmorphism metric cards.</figcaption>
+          <div class="overlay-card" aria-live="polite">
+            <strong>Wallets</strong><br/><small>Graph score ↑ 0.82</small>
+          </div>
+          <div class="overlay-card" style="left: 6%; right:auto; top:auto; bottom: 10%;">
+            <strong>Risk Score</strong><br/><small>VaR 95% OK</small>
+          </div>
+          <div class="overlay-card" style="left:auto; right: 10%; top:auto; bottom: 18%;">
+            <strong>Liquidity Route</strong><br/><small>Multi-chain √</small>
+          </div>
+        </figure>
+      </div>
+
+      <!-- Social proof logos -->
+      <div class="container" style="margin-top: 28px;">
+        <div class="logos" aria-label="Featured by">
+          <img src="/assets/logos/logo-1.svg" alt="Logo 1 placeholder" loading="lazy"/>
+          <img src="/assets/logos/logo-2.svg" alt="Logo 2 placeholder" loading="lazy"/>
+          <img src="/assets/logos/logo-3.svg" alt="Logo 3 placeholder" loading="lazy"/>
+          <img src="/assets/logos/logo-4.svg" alt="Logo 4 placeholder" loading="lazy"/>
+          <img src="/assets/logos/logo-5.svg" alt="Logo 5 placeholder" loading="lazy"/>
+          <img src="/assets/logos/logo-6.svg" alt="Logo 6 placeholder" loading="lazy"/>
+        </div>
+      </div>
     </section>
 
-    <section id="products">
-        <div class="container">
-            <h2 class="section-title">Core Products</h2>
-            <p class="section-subtitle">Our comprehensive suite of Bitcoin protection and financialization tools</p>
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-shield-alt card-icon"></i>
-                        <h3 class="card-title">AI-Powered Bitcoin Insurance</h3>
-                        <div class="card-subtitle">Dynamic protection for wallets & protocols</div>
-                        <span class="status-badge status-active">MVP Available</span>
-                    </div>
-                    <div class="card-body">
-                        <p>AI-driven insurance policies covering:</p>
-                        <ul class="card-features">
-                            <li>Wallet compromises & key theft</li>
-                            <li>Smart contract failures</li>
-                            <li>Bridge vulnerabilities</li>
-                            <li>Phishing attacks</li>
-                        </ul>
-                        <p>Dynamic pricing based on real-time risk assessment.</p>
-                    </div>
-                </div>
-                
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-brain card-icon"></i>
-                        <h3 class="card-title">BTC Risk Intelligence Engine</h3>
-                        <div class="card-subtitle">Real-time wallet scoring & threat detection</div>
-                        <span class="status-badge status-active">MVP Available</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Continuous analysis of Bitcoin activity:</p>
-                        <ul class="card-features">
-                            <li>Wallet trust scoring (0-100)</li>
-                            <li>Behavioral anomaly detection</li>
-                            <li>Threat signal monitoring</li>
-                            <li>Predictive risk modeling</li>
-                        </ul>
-                        <p>Tailored to Bitcoin's UTXO architecture.</p>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-vault card-icon"></i>
-                        <h3 class="card-title">BTCFi Vaults</h3>
-                        <div class="card-subtitle">Insured yield for idle Bitcoin</div>
-                        <span class="status-badge status-dev">In Development</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Activate idle BTC with protection:</p>
-                        <ul class="card-features">
-                            <li>Risk-weighted yield pools</li>
-                            <li>AI-vetted lending protocols</li>
-                            <li>Integrated insurance coverage</li>
-                            <li>Real-time protection scoring</li>
-                        </ul>
-                        <p>Non-custodial design preserves ownership.</p>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-line card-icon"></i>
-                        <h3 class="card-title">Predictive Risk Models</h3>
-                        <div class="card-subtitle">Anticipate systemic threats</div>
-                        <span class="status-badge status-dev">In Development</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Advanced forecasting algorithms:</p>
-                        <ul class="card-features">
-                            <li>Black swan event prediction</li>
-                            <li>Protocol failure forecasting</li>
-                            <li>Market liquidation risks</li>
-                            <li>Bridge exploit detection</li>
-                        </ul>
-                        <p>Enables preemptive risk mitigation.</p>
-                    </div>
-                </div>
-                
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-cogs card-icon"></i>
-                        <h3 class="card-title">B2B API Ecosystem</h3>
-                        <div class="card-subtitle">Integrate protection into any platform</div>
-                        <span class="status-badge status-dev">In Development</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Modular APIs for integration:</p>
-                        <ul class="card-features">
-                            <li>Real-time risk scoring API</li>
-                            <li>Fraud intelligence feeds</li>
-                            <li>Claims management system</li>
-                            <li>Wallet reputation tracking</li>
-                        </ul>
-                        <p>For exchanges, wallets & DeFi protocols.</p>
-                    </div>
-                </div>
-                
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="card-header">
-                        <i class="fas fa-building card-icon"></i>
-                        <h3 class="card-title">US Compliance Suite</h3>
-                        <div class="card-subtitle">Regulatory-ready for American market</div>
-                        <span class="status-badge status-planned">Q3 2025</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Tools for US regulatory compliance:</p>
-                        <ul class="card-features">
-                            <li>FinCEN reporting integration</li>
-                            <li>SEC-ready dashboards</li>
-                            <li>State-by-state compliance</li>
-                            <li>CFTC framework alignment</li>
-                        </ul>
-                        <p>Designed for US-based institutions.</p>
-                    </div>
-                </div>
-            </div>
+    <!-- PROBLEM / SOLUTION -->
+    <section class="container" id="problem">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Why now</div>
+          <h2>From dormant BTC to active capital</h2>
         </div>
+      </div>
+      <div class="split">
+        <div class="card reveal" style="padding:1.1rem;">
+          <h3>The Problem</h3>
+          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Dormant BTC limits market efficiency.</p></div>
+          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Over-collateralization wastes capital.</p></div>
+          <div class="bullet"><svg width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".2"/></svg><p>Liquidity is fragmented across chains.</p></div>
+        </div>
+        <div class="card reveal" style="padding:1.1rem;">
+          <h3>Our Solution</h3>
+          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Hybrid self-learning model</strong> to detect safe unlock routes.</p></div>
+          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Non-custodial</strong> integrations & risk-aware flows.</p></div>
+          <div class="bullet"><svg width="20" height="20" aria-hidden="true"><path d="M3 10l4 4 10-10" fill="none" stroke="currentColor" stroke-width="2"/></svg><p><strong>Cross-chain</strong> activation with smart routing.</p></div>
+          <figure style="margin:1rem 0 0;">
+            <svg width="100%" height="140" viewBox="0 0 600 140" role="img" aria-label="Wallet nodes to AI engine to liquidity pools">
+              <defs><linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs>
+              <circle cx="60" cy="70" r="26" fill="none" stroke="url(#gl)" stroke-width="3"/>
+              <circle cx="60" cy="30" r="8" fill="url(#gl)"/><circle cx="60" cy="110" r="8" fill="url(#gl)"/><circle cx="30" cy="70" r="8" fill="url(#gl)"/>
+              <rect x="230" y="35" width="140" height="70" rx="14" fill="none" stroke="url(#gl)" stroke-width="3"/>
+              <text x="300" y="75" fill="currentColor" text-anchor="middle" font-size="14">AI Engine</text>
+              <circle cx="520" cy="50" r="18" fill="none" stroke="url(#gl)" stroke-width="3"/>
+              <circle cx="520" cy="95" r="18" fill="none" stroke="url(#gl)" stroke-width="3"/>
+              <path d="M86 70 H230" stroke="url(#gl)" stroke-width="2"/>
+              <path d="M370 70 C420 70 470 50 502 50" stroke="url(#gl)" stroke-width="2" fill="none"/>
+              <path d="M370 70 C420 70 470 95 502 95" stroke="url(#gl)" stroke-width="2" fill="none"/>
+            </svg>
+            <figcaption class="subtle">Wallet nodes → AI engine → liquidity pools (simplified).</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
 
-    <section id="simulation">
-        <div class="container">
-            <h2 class="section-title">Risk Intelligence Simulation</h2>
-            <p class="section-subtitle">Experience our AI-powered risk assessment in action</p>
-            <div class="simulation-container">
-                <div class="simulation-header">
-                    <h3 class="simulation-title">Bitcoin Wallet Protection Analysis</h3>
-                    <div class="status-badge status-active">Live Demo</div>
-                </div>
-                
-                <div class="simulation-content">
-                    <div class="input-section">
-                        <div class="input-group">
-                            <label for="walletAddress"><i class="fas fa-wallet"></i> Bitcoin Wallet Address</label>
-                            <input type="text" id="walletAddress" placeholder="bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq" value="bc1q9zd8fj7c7hq...">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="btcAmount"><i class="fab fa-bitcoin"></i> BTC Amount</label>
-                            <input type="number" id="btcAmount" placeholder="1.5" min="0.001" step="0.001" value="2.75">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="walletType"><i class="fas fa-lock"></i> Wallet Type</label>
-                            <select id="walletType">
-                                <option value="cold">Cold Storage</option>
-                                <option value="hot" selected>Hot Wallet</option>
-                                <option value="multisig">Multi-signature</option>
-                                <option value="custodial">Custodial</option>
-                            </select>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="usagePattern"><i class="fas fa-chart-line"></i> Usage Pattern</label>
-                            <select id="usagePattern">
-                                <option value="hodl">Long-term holding</option>
-                                <option value="active" selected>Regular transactions</option>
-                                <option value="defi">BTCFi participation</option>
-                                <option value="exchange">Exchange trading</option>
-                            </select>
-                        </div>
-                        
-                        <button class="cta-button" style="width:100%;">Assess Risk & Generate Quote</button>
-                    </div>
-                    
-                    <div class="result-box">
-                        <h3 class="result-title">Risk Assessment Report</h3>
-                        <div class="metric">
-                            <span>Wallet Trust Score</span>
-                            <span class="metric-value">84/100</span>
-                        </div>
-                        
-                        <div class="metric">
-                            <span>Threat Level</span>
-                            <span class="metric-value" style="color:var(--success)">Low</span>
-                        </div>
-                        
-                        <div class="risk-meter">
-                            <div class="risk-level" style="width: 28%; background: var(--success);"></div>
-                        </div>
-                        <div class="risk-labels">
-                            <span>Low</span>
-                            <span>Medium</span>
-                            <span>High</span>
-                            <span>Critical</span>
-                        </div>
-                        
-                        <div class="metric">
-                            <span>Detected Anomalies</span>
-                            <span class="metric-value" style="color:var(--success)">None</span>
-                        </div>
-                        
-                        <div class="metric">
-                            <span>Insurance Premium (Annual)</span>
-                            <span class="metric-value">1.35%</span>
-                        </div>
-                        
-                        <div class="metric">
-                            <span>Recommended Coverage</span>
-                            <span class="metric-value">$98,500</span>
-                        </div>
-                        
-                        <div class="metric">
-                            <span>BTCFi Yield Opportunity</span>
-                            <span class="metric-value" style="color:var(--accent)">5.2% APY</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- HOW IT WORKS -->
+    <section class="container" id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">How it works</div>
+          <h2 id="how-title">Analyze, assess, activate</h2>
         </div>
+      </div>
+      <div class="steps">
+        <details class="step reveal" open>
+          <summary><span class="badge">01</span><strong> Analyze</strong> on-chain patterns</summary>
+          <p>Unsupervised clustering and graph signals identify dormant wallet cohorts and behavior fingerprints to estimate activation potential.</p>
+        </details>
+        <details class="step reveal">
+          <summary><span class="badge">02</span><strong> Assess</strong> risk & policy</summary>
+          <p>Risk scoring (VaR/expected shortfall), compliance checks, and guardrails ensure safe, non-custodial liquidity flows respecting constraints.</p>
+        </details>
+        <details class="step reveal">
+          <summary><span class="badge">03</span><strong> Activate</strong> liquidity routes</summary>
+          <p>AI selects cross-chain routes and execution windows to minimize slippage and maximize safety—then monitors and adapts in real-time.</p>
+        </details>
+      </div>
     </section>
 
-    <section id="hybrid">
-        <div class="container">
-            <h2 class="section-title">Hybrid Protection Model</h2>
-            <p class="section-subtitle">Secure your Bitcoin while earning yield - the best of both worlds</p>
-            
-            <div class="hybrid-demo">
-                <div class="demo-header">
-                    <h3 class="demo-title">Protect & Grow Your Bitcoin</h3>
-                    <p class="demo-subtitle">Our hybrid model enables you to earn yield on idle BTC while maintaining full protection against risks</p>
-                </div>
-                
-                <div class="demo-steps">
-                    <div class="step active">
-                        <div class="step-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="step-number">1</div>
-                        <h4 class="step-title">Idle Bitcoin</h4>
-                        <p class="step-desc">BTC sitting idle with no protection or yield</p>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="step-number">2</div>
-                        <h4 class="step-title">Risk Assessment</h4>
-                        <p class="step-desc">AI analyzes wallet and market risks</p>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-icon">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <div class="step-number">3</div>
-                        <h4 class="step-title">Insurance Coverage</h4>
-                        <p class="step-desc">Dynamic policy issued based on risk profile</p>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="step-number">4</div>
-                        <h4 class="step-title">Yield Activation</h4>
-                        <p class="step-desc">BTC allocated to AI-vetted yield strategies</p>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-icon">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <div class="step-number">5</div>
-                        <h4 class="step-title">Protected Growth</h4>
-                        <p class="step-desc">Earn yield while maintaining full protection</p>
-                    </div>
-                </div>
-                
-                <div class="demo-content">
-                    <div class="demo-visual">
-                        <h3 style="color: var(--accent); margin-bottom: 1.5rem;">How It Works</h3>
-                        <div style="display: flex; align-items: center; height: 100%;">
-                            <div style="flex: 1; text-align: center;">
-                                <div style="position: relative; margin: 0 auto; width: 90%;">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
-                                        <div style="text-align: center;">
-                                            <div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 3px solid #b22234; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                                <div style="text-align: center;">
-                                                    <div style="font-size: 2rem; color: #b22234;">2.75 BTC</div>
-                                                    <div style="font-size: 0.9rem; opacity: 0.8;">Idle Assets</div>
-                                                </div>
-                                            </div>
-                                            <div style="margin-top: 10px; font-weight: 600;">Traditional Holding</div>
-                                        </div>
-                                        
-                                        <div style="text-align: center;">
-                                            <div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                                <div style="text-align: center;">
-                                                    <div style="font-size: 2rem; color: var(--accent);">2.75 BTC</div>
-                                                    <div style="font-size: 0.9rem; opacity: 0.8;">Protected Assets</div>
-                                                </div>
-                                            </div>
-                                            <div style="margin-top: 10px; font-weight: 600;">BlocentraAI Solution</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="position: relative; height: 100px; margin: 20px 0;">
-                                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(to right, #b22234, var(--accent));"></div>
-                                        <div style="position: absolute; top: 50px; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.2);"></div>
-                                        
-                                        <div style="position: absolute; top: 25px; left: 0; width: 100%; text-align: center;">
-                                            <div style="display: inline-block; background: var(--dark); padding: 5px 15px; border-radius: 20px; font-weight: 600;">
-                                                +5.2% APY
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <div style="text-align: center; flex: 1;">
-                                            <div style="font-size: 1.2rem; color: #b22234;">$0</div>
-                                            <div>Annual Yield</div>
-                                        </div>
-                                        
-                                        <div style="text-align: center; flex: 1;">
-                                            <div style="font-size: 1.2rem; color: var(--accent);">$5,720</div>
-                                            <div>Annual Yield</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="demo-chart">
-                        <h3 style="color: var(--accent); margin-bottom: 1.5rem;">Value Projection</h3>
-                        <div style="display: flex; height: 100%; flex-direction: column; justify-content: space-between;">
-                            <div style="margin-bottom: 2rem;">
-                                <div class="metric">
-                                    <span>Current Value</span>
-                                    <span class="metric-value">$98,500</span>
-                                </div>
-                                <div class="metric">
-                                    <span>Projected Value (1 Year)</span>
-                                    <span class="metric-value" style="color: var(--accent);">$104,220</span>
-                                </div>
-                                <div class="metric">
-                                    <span>Projected Value (3 Years)</span>
-                                    <span class="metric-value" style="color: var(--accent);">$115,450</span>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h4 style="color: var(--accent); margin-bottom: 1rem;">Security Benefits</h4>
-                                <ul style="list-style: none;">
-                                    <li style="padding: 8px 0; display: flex;">
-                                        <i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i>
-                                        <span>Full insurance coverage against theft and loss</span>
-                                    </li>
-                                    <li style="padding: 8px 0; display: flex;">
-                                        <i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i>
-                                        <span>24/7 threat monitoring</span>
-                                    </li>
-                                    <li style="padding: 8px 0; display: flex;">
-                                        <i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i>
-                                        <span>Real-time anomaly detection</span>
-                                    </li>
-                                    <li style="padding: 8px 0; display: flex;">
-                                        <i class="fas fa-check" style="color: var(--accent); margin-right: 10px;"></i>
-                                        <span>Non-custodial solution</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="demo-controls">
-                    <button class="demo-btn">Reset Demo</button>
-                    <button class="demo-btn primary">Simulate Your Portfolio</button>
-                </div>
-            </div>
-        </div>
+    <!-- KPI STRIP -->
+    <section class="container">
+      <div class="strip reveal" aria-label="Demo metrics">
+        <div class="kpi"><div class="num" data-count="1254321">0</div><div class="subtle">Wallets analyzed</div></div>
+        <div class="kpi"><div class="num" data-count="8542093">0</div><div class="subtle">Liquidity routes simulated</div></div>
+        <div class="kpi"><div class="num" data-count="78">0</div><div class="subtle">Avg. unlock score</div></div>
+      </div>
+      <p class="subtle" style="margin:.5rem 0 0;">Simulated metrics for demo purposes.</p>
     </section>
 
-    <section id="roadmap">
-        <div class="container">
-            <h2 class="section-title">US-Focused Roadmap</h2>
-            <p class="section-subtitle">Our strategic plan for Bitcoin risk infrastructure in the United States</p>
-            
-            <div class="roadmap">
-                <div class="roadmap-item">
-                    <div class="roadmap-phase">PHASE 1: MVP (Q4 2024)</div>
-                    <h3 class="roadmap-title">Core Platform Launch</h3>
-                    <ul class="roadmap-features">
-                        <li>Wallet risk scoring engine</li>
-                        <li>Basic insurance prototype</li>
-                        <li>BTCFi vault testnet</li>
-                        <li>San Francisco HQ establishment</li>
-                        <li>US regulatory consultations</li>
-                        <li>First institutional pilots</li>
-                    </ul>
-                </div>
-                
-                <div class="roadmap-item">
-                    <div class="roadmap-phase">PHASE 2: EXPANSION (2025)</div>
-                    <h3 class="roadmap-title">US Market Integration</h3>
-                    <ul class="roadmap-features">
-                        <li>API licensing for US exchanges</li>
-                        <li>Institutional dashboards</li>
-                        <li>NYDFS compliance framework</li>
-                        <li>FinCEN reporting integration</li>
-                        <li>Partnerships with US custodians</li>
-                        <li>SEC engagement program</li>
-                    </ul>
-                </div>
-                
-                <div class="roadmap-item">
-                    <div class="roadmap-phase">PHASE 3: LEADERSHIP (2026)</div>
-                    <h3 class="roadmap-title">National Infrastructure</h3>
-                    <ul class="roadmap-features">
-                        <li>State-by-state compliance</li>
-                        <li>Federal agency partnerships</li>
-                        <li>Advanced vault products</li>
-                        <li>US banking integration</li>
-                        <li>Enterprise solutions for Fortune 500</li>
-                        <li>National security collaborations</li>
-                    </ul>
-                </div>
-            </div>
+    <!-- FEATURES -->
+    <section class="container" id="features">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Product</div>
+          <h2>AI-first features for safe activation</h2>
         </div>
+      </div>
+      <div class="grid grid-3">
+        <article class="feature reveal">
+          <h3>AI Risk Engine</h3>
+          <p>Adaptive risk scoring blends statistical VaR with graph-based anomaly detection for safe, policy-aware activation decisions.</p>
+        </article>
+        <article class="feature reveal">
+          <h3>Non-Custodial Bridges</h3>
+          <p>Integrates with audited, non-custodial protocols to route value without taking possession of user funds at any time.</p>
+        </article>
+        <article class="feature reveal">
+          <h3>Cross-Chain Routing</h3>
+          <p>Optimizes routes across chains and layers with latency, depth, and slippage constraints for reliable execution.</p>
+        </article>
+        <article class="feature reveal">
+          <h3>Institutional APIs</h3>
+          <p>High-throughput endpoints, granular controls, and observability built for funds, desks, and enterprise partners.</p>
+        </article>
+        <article class="feature reveal">
+          <h3>Privacy-Preserving Analytics</h3>
+          <p>Aggregated insights with differential privacy to protect entities while surfacing actionable signals.</p>
+        </article>
+        <article class="feature reveal">
+          <h3>Developer Sandbox</h3>
+          <p>Simulation tools and SDKs for testing strategies with synthetic order books and policy guardrails.</p>
+        </article>
+      </div>
     </section>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-logo">Bloc<span>entra</span>AI</div>
-            <p class="footer-tagline">Securing the Future of Bitcoin with Intelligence, Safety, and Yield</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <span>contact@blocentra.ai</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone contact-icon"></i>
-                    <span>+1 (415) 555-0199</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <span>San Francisco, CA</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-github contact-icon"></i>
-                    <span>Technical Documentation</span>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                © 2025 BlocentraAI. All rights reserved. | Headquarters: San Francisco, CA, USA
-            </div>
+    <!-- CHART -->
+    <section class="container" aria-labelledby="chart-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Insights</div>
+          <h2 id="chart-title">Idle vs Activated BTC (simulated)</h2>
         </div>
-    </footer>
+      </div>
+      <div class="chart-wrap reveal">
+        <canvas id="chart" width="1200" height="420" role="img" aria-label="Line chart comparing idle and activated BTC over time"></canvas>
+      </div>
+    </section>
 
-    <script>
-        // Step animation for hybrid demo
-        const steps = document.querySelectorAll('.step');
-        let currentStep = 0;
-        
-        function updateSteps() {
-            steps.forEach((step, index) => {
-                if (index <= currentStep) {
-                    step.classList.add('active');
-                } else {
-                    step.classList.remove('active');
-                }
-            });
-            
-            // Simulate data changes based on step
-            if (currentStep === 1) {
-                document.querySelector('.risk-level').style.width = '28%';
-                document.querySelector('.metric-value:nth-child(2)').textContent = 'Low';
-                document.querySelector('.metric-value:nth-child(2)').style.color = 'var(--success)';
-            }
-            
-            if (currentStep === 3) {
-                // Simulate APY change
-                const apyValue = document.querySelector('.metric-value:nth-child(7)');
-                apyValue.textContent = '5.2% APY';
-                apyValue.style.color = 'var(--accent)';
-            }
-            
-            currentStep = (currentStep + 1) % 6;
-        }
-        
-        // Auto-advance steps
-        setInterval(updateSteps, 2500);
-        
-        // Initial update
-        updateSteps();
-        
-        // Risk simulation button
-        document.querySelector('.cta-button').addEventListener('click', function() {
-            alert('Thank you for your interest! Our team will contact you shortly about early access.');
-        });
-    </script>
-</body>
-</html>
+    <!-- PRICING -->
+    <section class="container" id="pricing" aria-labelledby="pricing-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Pricing</div>
+          <h2 id="pricing-title">Start free, scale with confidence</h2>
+        </div>
+        <div class="toggle" role="group" aria-label="Billing period">
+          <button type="button" class="active" data-bill="m">Monthly</button>
+          <button type="button" data-bill="y">Annual</button>
+        </div>
+      </div>
+      <div class="pricing">
+        <div class="price-card reveal" aria-labelledby="p1">
+          <h3 id="p1">Founders</h3>
+          <div class="price" data-price-m="$0" data-price-y="$0">$0</div>
+          <p class="subtle">Waitlist, docs, community.</p>
+          <button class="btn" aria-label="Join Founders plan waitlist">Join Waitlist</button>
+        </div>
+        <div class="price-card highlight reveal" aria-labelledby="p2">
+          <h3 id="p2">Pro</h3>
+          <div class="price" data-price-m="$299/mo" data-price-y="$2,990/yr">$299/mo</div>
+          <p class="subtle">Priority API, higher limits, email support.</p>
+          <button class="btn" aria-label="Join Pro plan waitlist">Join Waitlist</button>
+        </div>
+        <div class="price-card reveal" aria-labelledby="p3">
+          <h3 id="p3">Enterprise</h3>
+          <div class="price" data-price-m="Talk to us" data-price-y="Talk to us">Talk to us</div>
+          <p class="subtle">Custom SLAs, on-prem options, dedicated support.</p>
+          <button class="btn btn-outline" aria-label="Talk to sales">Talk to Sales</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="container" aria-labelledby="t-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">What people say</div>
+          <h2 id="t-title">Trusted by builders & analysts</h2>
+        </div>
+      </div>
+      <div class="testimonials">
+        <figure class="testimonial reveal" aria-labelledby="q1">
+          <div style="display:flex; align-items:center; gap:.8rem;">
+            <img class="avatar" src="/assets/testimonial-1.jpg" alt="Portrait of Alex Chen, Portfolio Manager" loading="lazy"/>
+            <figcaption>
+              <strong>Alex Chen</strong><br/><span class="subtle">Portfolio Manager</span>
+            </figcaption>
+          </div>
+          <blockquote id="q1" style="margin:.8rem 0 0;">“BlocentraAI’s risk-aware routing is the first credible path to activating dormant BTC at scale.”</blockquote>
+        </figure>
+        <figure class="testimonial reveal" aria-labelledby="q2">
+          <div style="display:flex; align-items:center; gap:.8rem;">
+            <img class="avatar" src="/assets/testimonial-2.jpg" alt="Portrait of Priya Nair, Protocol Engineer" loading="lazy"/>
+            <figcaption>
+              <strong>Priya Nair</strong><br/><span class="subtle">Protocol Engineer</span>
+            </figcaption>
+          </div>
+          <blockquote id="q2" style="margin:.8rem 0 0;">“The hybrid self-learning model adapts to market regimes in a way static systems simply can’t.”</blockquote>
+        </figure>
+        <figure class="testimonial reveal" aria-labelledby="q3">
+          <div style="display:flex; align-items:center; gap:.8rem;">
+            <img class="avatar" src="/assets/testimonial-3.jpg" alt="Portrait of Mateo Silva, Quant Researcher" loading="lazy"/>
+            <figcaption>
+              <strong>Mateo Silva</strong><br/><span class="subtle">Quant Researcher</span>
+            </figcaption>
+          </div>
+          <blockquote id="q3" style="margin:.8rem 0 0;">“Non-custodial by design, with serious analytics—this is how crypto infrastructure should look.”</blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="container" id="faq" aria-labelledby="faq-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">FAQ</div>
+          <h2 id="faq-title">Questions, answered</h2>
+        </div>
+      </div>
+      <div class="faq reveal" role="list">
+        <details role="listitem" open>
+          <summary>Is BlocentraAI custodial?</summary>
+          <p>No. We integrate with audited, non-custodial protocols and never take possession of user funds.</p>
+        </details>
+        <details role="listitem">
+          <summary>How do you “unlock” idle BTC safely?</summary>
+          <p>Our hybrid model scores risk and policy, then routes liquidity through non-custodial rails with ongoing monitoring and guardrails.</p>
+        </details>
+        <details role="listitem">
+          <summary>Which chains/wallets are supported first?</summary>
+          <p>We prioritize BTC mainnet connectivity and major L2/bridge providers, expanding to additional chains as integrations mature.</p>
+        </details>
+        <details role="listitem">
+          <summary>What’s your business model?</summary>
+          <p>Usage-based platform fees and premium plans for advanced APIs and support.</p>
+        </details>
+        <details role="listitem">
+          <summary>Security & audits?</summary>
+          <p>Defense-in-depth, continuous monitoring, third-party audits, and formal verification on critical paths.</p>
+        </details>
+        <details role="listitem">
+          <summary>Compliance considerations?</summary>
+          <p>Policy-aware scoring with configurable constraints; KYC/AML integrations for institutional workflows where applicable.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- LEAD FORM -->
+    <section class="container" id="lead" aria-labelledby="lead-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Join the waitlist</div>
+          <h2 id="lead-title">Get early access + whitepaper preview</h2>
+          <p class="subtle">We’ll keep you posted. No spam—promise.</p>
+        </div>
+      </div>
+      <form novalidate aria-describedby="form-help">
+        <label class="visually-hidden" for="name">Name</label>
+        <input id="name" name="name" placeholder="Your name" autocomplete="name" />
+        <label class="visually-hidden" for="email">Email</label>
+        <input id="email" name="email" placeholder="you@company.com" inputmode="email" autocomplete="email" />
+        <label class="visually-hidden" for="company">Company</label>
+        <input id="company" name="company" placeholder="Company (optional)" autocomplete="organization" />
+        <button class="btn" type="submit" aria-label="Submit to join the waitlist">Request Access</button>
+        <div id="form-help" class="visually-hidden" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand" aria-label="BlocentraAI">
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false" style="width:22px;height:22px;">
+            <defs><linearGradient id="g2" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#22D3EE"/></linearGradient></defs>
+            <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#g2)"/>
+            <path d="M24 11c7 0 12 5 12 12s-5 12-12 12S12 30 12 23" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="24" cy="23"
