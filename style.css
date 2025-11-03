@@ -1188,3 +1188,116 @@ header.scrolled {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Services Page Styles - Updated for static layout */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+}
+
+.service-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.service-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.service-card:hover .service-image img {
+    transform: scale(1.05);
+}
+
+.service-content {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--charcoal);
+}
+
+.service-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.service-content ul {
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+}
+
+.service-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.service-content .btn {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+/* Remove old toggle styles */
+.services-toggle,
+.toggle-item,
+.toggle-header,
+.toggle-content,
+.toggle-body,
+.toggle-image,
+.toggle-text {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .service-content {
+        padding: 1.5rem;
+    }
+    
+    .service-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        gap: 1.5rem;
+    }
+    
+    .service-content {
+        padding: 1.25rem;
+    }
+    
+    .service-content h3 {
+        font-size: 1.3rem;
+    }
+}
