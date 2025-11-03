@@ -6,777 +6,7 @@
     <title>Dhab Construction | Your Partner in Infrastructural Development</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --charcoal: #2c2c2c;
-            --gold: #bfa06b;
-            --white: #ffffff;
-            --beige: #f5f2ed;
-            --light-gray: #f8f8f8;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            color: var(--charcoal);
-            background-color: var(--white);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--charcoal);
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--gold);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav li {
-            margin-left: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--gold);
-        }
-
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--gold);
-            transition: var(--transition);
-        }
-
-        nav a:hover:after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--charcoal);
-        }
-
-        /* Hero Section with Slider */
-        .hero {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            margin-top: 70px;
-        }
-
-        .slider {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.5s ease, transform 8s ease;
-            transform: scale(1.1);
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .slide-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: var(--white);
-            width: 80%;
-            max-width: 800px;
-            z-index: 2;
-        }
-
-        .slide-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .slide-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--gold);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background-color: #a88655;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--white);
-            margin-left: 10px;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--white);
-            color: var(--charcoal);
-        }
-
-        /* Section Styling */
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 3px;
-            background-color: var(--gold);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* About Section */
-        .about {
-            background-color: var(--light-gray);
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .about-image {
-            flex: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .about-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Services Section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        .service-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .service-card:hover .service-image img {
-            transform: scale(1.1);
-        }
-
-        .service-content {
-            padding: 1.5rem;
-        }
-
-        .service-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            background-color: var(--light-gray);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .portfolio-image {
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .portfolio-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-image img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: var(--white);
-            padding: 1.5rem;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .portfolio-overlay h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Blog Section */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .blog-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .blog-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .blog-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .blog-card:hover .blog-image img {
-            transform: scale(1.1);
-        }
-
-        .blog-content {
-            padding: 1.5rem;
-        }
-
-        .blog-meta {
-            display: flex;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .blog-date {
-            margin-right: 1rem;
-        }
-
-        .blog-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .blog-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .read-more {
-            background: none;
-            border: none;
-            color: var(--gold);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .read-more:hover {
-            color: #a88655;
-        }
-
-        .read-more i {
-            margin-left: 5px;
-            transition: var(--transition);
-        }
-
-        .read-more.active i {
-            transform: rotate(180deg);
-        }
-
-        .blog-full-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .blog-full-content.active {
-            max-height: 1000px;
-            margin-top: 1rem;
-        }
-
-        /* Invest Section */
-        .invest {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
-            text-align: center;
-        }
-
-        .invest-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .invest h2 {
-            color: var(--white);
-        }
-
-        .invest p {
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        /* Contact Section */
-        .contact-container {
-            display: flex;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            flex: 1;
-        }
-
-        .contact-details {
-            margin-bottom: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-icon {
-            background-color: var(--gold);
-            color: var(--white);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            flex-shrink: 0;
-        }
-
-        .contact-form {
-            flex: 1;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Lato', sans-serif;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            border-color: var(--gold);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(191, 160, 107, 0.2);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--charcoal);
-            color: var(--white);
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .footer-logo span {
-            color: var(--gold);
-        }
-
-        .footer-about p {
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background-color: var(--gold);
-            transform: translateY(-3px);
-        }
-
-        .footer-heading {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-heading:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 2px;
-            background-color: var(--gold);
-            bottom: 0;
-            left: 0;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-            padding-left: 5px;
-        }
-
-        .footer-contact p {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .footer-contact i {
-            margin-right: 10px;
-            color: var(--gold);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        /* Mobile Menu Styles */
-@media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: block;
-    }
-    
-    nav ul {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 300px;
-        height: 100vh;
-        background-color: var(--white);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 0;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        z-index: 1000;
-    }
-    
-    nav ul.active {
-        right: 0;
-    }
-    
-    nav li {
-        margin: 1.5rem 0;
-        width: 100%;
-        text-align: center;
-    }
-    
-    nav a {
-        display: block;
-        padding: 0.5rem 2rem;
-        font-size: 1.1rem;
-        border-bottom: 1px solid var(--light-gray);
-    }
-}
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .contact-container {
-                flex-direction: column;
-            }
-            
-            .slide-content h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            nav ul {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                flex-direction: column;
-                align-items: center;
-                padding: 2rem 0;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 999;
-            }
-            
-            nav ul.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            nav li {
-                margin: 1rem 0;
-            }
-            
-            .slide-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .slide-content h1 {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            section {
-                padding: 3rem 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header -->
@@ -788,7 +18,7 @@
             </button>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="portfolio.html">Portfolio</a></li>
@@ -863,13 +93,33 @@
             </div>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dhab Construction Team">
+                    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dhab Construction Team">
                 </div>
                 <div class="about-text">
                     <h3>Advanced Solutions for Essential Construction Projects</h3>
                     <p>We are a leading construction company based in South Sudan, specializing in delivering end-to-end solutions for residential, commercial, and infrastructural projects. With a commitment to innovation, quality, and timely delivery, we build lasting structures that empower communities and drive progress.</p>
                     <p>With over 120 years of combined professional experience among our team members, Dhab Construction has become a trusted partner in building essential infrastructure that empowers communities and drives sustainable development across South Sudan and Eastern Africa.</p>
                     <a href="about.html" class="btn">Learn More About Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Complete Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">On-Time Delivery Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">120+</div>
+                    <div class="stat-label">Team Members</div>
                 </div>
             </div>
         </div>
@@ -889,7 +139,7 @@
                     <div class="service-content">
                         <h3>Residential Construction</h3>
                         <p>Building modern homes with precision and care, creating comfortable living spaces for families across South Sudan.</p>
-                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                        <a href="services.html" class="btn">Explore Design</a>
                     </div>
                 </div>
                 <div class="service-card">
@@ -899,7 +149,7 @@
                     <div class="service-content">
                         <h3>Commercial Construction</h3>
                         <p>End-to-end real estate solutions for businesses, from office complexes to shopping malls and commercial towers.</p>
-                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                        <a href="services.html" class="btn">Explore Design</a>
                     </div>
                 </div>
                 <div class="service-card">
@@ -909,7 +159,7 @@
                     <div class="service-content">
                         <h3>Infrastructure Development</h3>
                         <p>Building the backbone of cities with roads, bridges, and essential public works that connect communities.</p>
-                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                        <a href="services.html" class="btn">Explore Design</a>
                     </div>
                 </div>
                 <div class="service-card">
@@ -919,7 +169,7 @@
                     <div class="service-content">
                         <h3>Community Institutions</h3>
                         <p>Creating schools, hospitals, and civic facilities that empower education, healthcare, and community well-being.</p>
-                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                        <a href="services.html" class="btn">Explore Design</a>
                     </div>
                 </div>
             </div>
@@ -984,7 +234,7 @@
                             <span class="blog-author">By Admin</span>
                         </div>
                         <h3>Meet the CEO</h3>
-                        <p>Meet Majuoy Tuak Dhab Bithuok: The Visionary Leader Behind Dhab Construction. At Dhab Construction, we believe that building is more than just erecting structures—it's about creating opportunities...</p>
+                        <p>Meet Majuoy Tuak Dhab Bithuok: The Visionary Leader Behind Dhab Construction. At Dhab Construction, we believe that building is more than just erecting structures...</p>
                         <button class="read-more">Read More <i class="fas fa-chevron-down"></i></button>
                         <div class="blog-full-content">
                             <p>At Dhab Construction, we believe that building is more than just erecting structures—it's about creating opportunities, shaping communities, and leaving a lasting legacy. At the helm of our mission is our CEO, Majuoy Tuak Dhab Bithuok, a passionate and accomplished leader whose journey reflects dedication to excellence and innovation in the construction industry.</p>
@@ -1002,7 +252,7 @@
                             <span class="blog-author">By Admin</span>
                         </div>
                         <h3>Learning from Addis Ababa</h3>
-                        <p>The transformation of Addis Ababa through strategic infrastructure development has captured the attention of leaders across Africa, including South Sudan's Minister of Land, Housing, and Urban Development...</p>
+                        <p>The transformation of Addis Ababa through strategic infrastructure development has captured the attention of leaders across Africa...</p>
                         <button class="read-more">Read More <i class="fas fa-chevron-down"></i></button>
                         <div class="blog-full-content">
                             <p>The transformation of Addis Ababa through strategic infrastructure development has captured the attention of leaders across Africa, including South Sudan's Minister of Land, Housing, and Urban Development, Michael Chanjiek. Speaking during the inaugural Africa Urban Forum held in Addis Ababa from September 4-6, 2024, Minister Chanjiek emphasized the importance of learning from Ethiopia's capital to inform South Sudan's own urban development strategies.</p>
@@ -1132,115 +382,6 @@
         </div>
     </footer>
 
-    <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mobile Menu Toggle - Fixed Version
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navMenu = document.querySelector('nav ul');
-        
-        if (mobileMenuBtn && navMenu) {
-            mobileMenuBtn.addEventListener('click', function() {
-                // Toggle active class on navigation
-                navMenu.classList.toggle('active');
-                
-                // Toggle hamburger icon
-                const icon = this.querySelector('i');
-                if (navMenu.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                    // Prevent body scroll when menu is open
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                    // Restore body scroll when menu is closed
-                    document.body.style.overflow = '';
-                }
-            });
-
-            // Close menu when clicking on nav links
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navMenu.classList.remove('active');
-                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                        document.body.style.overflow = '';
-                    }
-                });
-            });
-        }
-
-        // Hero Slider
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-
-        function showSlide(n) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
-        }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
-
-        // Auto slide change every 5 seconds (only if slides exist)
-        if (slides.length > 0) {
-            setInterval(nextSlide, 5000);
-        }
-
-        // Blog Read More Toggle
-        document.querySelectorAll('.read-more').forEach(button => {
-            button.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                content.classList.toggle('active');
-                this.classList.toggle('active');
-                
-                if (content.classList.contains('active')) {
-                    this.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
-                } else {
-                    this.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
-                }
-            });
-        });
-
-        // Contact Form Submission
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for your message! We will get back to you soon.');
-                this.reset();
-            });
-        }
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
-                } else {
-                    header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-                }
-            }
-        });
-
-        // Close mobile menu when window is resized to desktop size
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && navMenu) {
-                navMenu.classList.remove('active');
-                if (mobileMenuBtn) {
-                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                }
-                document.body.style.overflow = '';
-            }
-        });
-    });
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
