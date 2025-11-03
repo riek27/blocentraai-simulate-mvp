@@ -3,288 +3,1149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dhab Construction - Your Partner in Infrastructural Development. Leading construction company in South Sudan specializing in residential, commercial, and infrastructure projects.">
-    <meta name="keywords" content="construction, real estate, infrastructure, South Sudan, building, engineering, roads, bridges, dams">
     <title>Dhab Construction | Your Partner in Infrastructural Development</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #2c2c2c;
+            --gold: #bfa06b;
+            --white: #ffffff;
+            --beige: #f5f2ed;
+            --light-gray: #f8f8f8;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background-color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--charcoal);
+        }
+
+        /* Hero Section with Slider */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 8s ease;
+            transform: scale(1.1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--white);
+            width: 80%;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .slide-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #a88655;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            margin-left: 10px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--charcoal);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--light-gray);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background-color: var(--light-gray);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .portfolio-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: var(--white);
+            padding: 1.5rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .blog-date {
+            margin-right: 1rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: #a88655;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more.active i {
+            transform: rotate(180deg);
+        }
+
+        .blog-full-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .blog-full-content.active {
+            max-height: 1000px;
+            margin-top: 1rem;
+        }
+
+        /* Invest Section */
+        .invest {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .invest-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .invest h2 {
+            color: var(--white);
+        }
+
+        .invest p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            background-color: var(--gold);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(191, 160, 107, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--gold);
+        }
+
+        .footer-about p {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-heading:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .slide-content h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav li {
+                margin: 1rem 0;
+            }
+            
+            .slide-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .slide-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">DHAB CONSTRUCTION</a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="invest.html">Invest</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Dhab<span>Construction</span></a>
+            <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="invest.html">Invest</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Slider -->
-    <section class="hero-slider">
-        <div class="slider-container">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1565002354128-3e9cf236b687?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <!-- Hero Section with Slider -->
+    <section class="hero">
+        <div class="slider">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Your Partner in Infrastructural Development.</h1>
-                    <p>Delivering lasting value through quality construction and design.</p>
-                    <a href="portfolio.html" class="cta-button">Explore Our Projects</a>
+                    <h1>Your Partner in Infrastructural Development</h1>
+                    <p>Delivering lasting value through quality construction and design</p>
+                    <a href="portfolio.html" class="btn">Explore Our Projects</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504307651299-b5093c8e0a9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Building the Future of South Sudan.</h1>
-                    <p>From homes to highways, we turn visions into landmarks.</p>
-                    <a href="about.html" class="cta-button">Learn About Us</a>
+                    <h1>Building the Future of South Sudan</h1>
+                    <p>From homes to highways, we turn visions into landmarks</p>
+                    <a href="about.html" class="btn">Learn About Us</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1563162582-75f319f7c9ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541976590-713941681591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Innovative Construction Solutions.</h1>
-                    <p>Engineering excellence through modern technology and expertise.</p>
-                    <a href="services.html" class="cta-button">See Our Services</a>
+                    <h1>Innovative Construction Solutions</h1>
+                    <p>Engineering excellence through modern technology and expertise</p>
+                    <a href="services.html" class="btn">See Our Services</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Timely Delivery, Every Time.</h1>
-                    <p>Reliability that defines our reputation.</p>
-                    <a href="contact.html" class="cta-button">Request a Quote</a>
+                    <h1>Timely Delivery, Every Time</h1>
+                    <p>Reliability that defines our reputation</p>
+                    <a href="contact.html" class="btn">Contact Our Team</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1563964688217-f4c93c6c6a78?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Residential & Commercial Projects.</h1>
-                    <p>Building the spaces where communities thrive.</p>
-                    <a href="portfolio.html" class="cta-button">View Portfolio</a>
+                    <h1>Residential & Commercial Projects</h1>
+                    <p>Building spaces where communities thrive</p>
+                    <a href="portfolio.html" class="btn">View Portfolio</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553435113-1a6e466379e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
-                    <h1>Shaping Tomorrow's Infrastructure.</h1>
-                    <p>Bridges, roads, and facilities that connect and empower.</p>
-                    <a href="portfolio.html" class="cta-button">See Our Work</a>
+                    <h1>Shaping Tomorrow's Infrastructure</h1>
+                    <p>Bridges, roads, and facilities that connect and empower</p>
+                    <a href="portfolio.html" class="btn">See Our Work</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
                 <div class="slide-content">
                     <h1>Invest. Build. Grow.</h1>
-                    <p>Partner with us to shape South Sudan's skyline.</p>
-                    <a href="invest.html" class="cta-button">Invest With Us</a>
+                    <p>Partner with us to shape South Sudan's skyline</p>
+                    <a href="invest.html" class="btn">Invest With Us</a>
                 </div>
             </div>
-        </div>
-        <div class="slider-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about-preview section-padding">
+    <section class="about">
         <div class="container">
+            <div class="section-title">
+                <h2>About Our Company</h2>
+            </div>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dhab Construction team working on a project">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dhab Construction Team">
                 </div>
                 <div class="about-text">
-                    <h2>Advanced Solutions for Essential Construction Projects.</h2>
-                    <p>We are a leading construction company in South Sudan, delivering world-class residential, commercial, and infrastructural projects with innovation, quality, and precision. With over 120 years of combined experience, our team of experts is committed to excellence in every project we undertake.</p>
-                    <a href="about.html" class="secondary-button">Learn More About Us</a>
+                    <h3>Advanced Solutions for Essential Construction Projects</h3>
+                    <p>We are a leading construction company based in South Sudan, specializing in delivering end-to-end solutions for residential, commercial, and infrastructural projects. With a commitment to innovation, quality, and timely delivery, we build lasting structures that empower communities and drive progress.</p>
+                    <p>With over 120 years of combined professional experience among our team members, Dhab Construction has become a trusted partner in building essential infrastructure that empowers communities and drives sustainable development across South Sudan and Eastern Africa.</p>
+                    <a href="about.html" class="btn">Learn More About Us</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section class="services-preview section-padding" style="background-image: url('https://images.unsplash.com/photo-1563964688217-f4c93c6c6a78?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <section class="services">
         <div class="container">
-            <div class="section-header">
+            <div class="section-title">
                 <h2>Our Core Services</h2>
             </div>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Residential Construction">
                     </div>
-                    <h3>Residential Construction</h3>
-                    <p>Building modern homes with precision and care.</p>
-                    <a href="services.html" class="read-more">Explore Design</a>
+                    <div class="service-content">
+                        <h3>Residential Construction</h3>
+                        <p>Building modern homes with precision and care, creating comfortable living spaces for families across South Sudan.</p>
+                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-building"></i>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial Construction">
                     </div>
-                    <h3>Commercial Construction</h3>
-                    <p>End-to-end real estate solutions for your business.</p>
-                    <a href="services.html" class="read-more">Explore Design</a>
+                    <div class="service-content">
+                        <h3>Commercial Construction</h3>
+                        <p>End-to-end real estate solutions for businesses, from office complexes to shopping malls and commercial towers.</p>
+                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-road"></i>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Infrastructure Development">
                     </div>
-                    <h3>Infrastructure Development</h3>
-                    <p>From roads to bridges, we build the backbone of cities.</p>
-                    <a href="services.html" class="read-more">Explore Design</a>
+                    <div class="service-content">
+                        <h3>Infrastructure Development</h3>
+                        <p>Building the backbone of cities with roads, bridges, and essential public works that connect communities.</p>
+                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-hospital"></i>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community Institutions">
                     </div>
-                    <h3>Community Institutions</h3>
-                    <p>Creating schools, hospitals, and spaces that empower.</p>
-                    <a href="services.html" class="read-more">Explore Design</a>
+                    <div class="service-content">
+                        <h3>Community Institutions</h3>
+                        <p>Creating schools, hospitals, and civic facilities that empower education, healthcare, and community well-being.</p>
+                        <a href="services.html" class="btn" style="margin-top: 15px;">Explore Design</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section class="portfolio-preview section-padding">
+    <section class="portfolio">
         <div class="container">
-            <div class="section-header">
+            <div class="section-title">
                 <h2>Our Featured Projects</h2>
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1564013799919-ab39cf43c7ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern residential building project">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1541976590-713941681591?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Residential Complex">
+                    </div>
                     <div class="portfolio-overlay">
-                        <h3>Juba Heights Residential Complex</h3>
-                        <p>Residential</p>
+                        <h3>Juba Residential Complex</h3>
+                        <p>Modern housing development with 50 units</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial office building">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial Tower">
+                    </div>
                     <div class="portfolio-overlay">
-                        <h3>Business District Tower</h3>
-                        <p>Commercial</p>
+                        <h3>City Center Office Tower</h3>
+                        <p>12-story commercial building in central Juba</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1467512666210-0b02d0b3c18c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bridge construction project">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bridge Project">
+                    </div>
                     <div class="portfolio-overlay">
                         <h3>Nile River Bridge</h3>
-                        <p>Infrastructure</p>
+                        <p>250m bridge connecting communities</p>
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <a href="portfolio.html" class="primary-button">View All Portfolio</a>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="portfolio.html" class="btn">View All Portfolio</a>
             </div>
         </div>
     </section>
 
     <!-- Blog Section -->
-    <section class="blog-preview section-padding">
+    <section class="blog">
         <div class="container">
-            <div class="section-header">
+            <div class="section-title">
                 <h2>Latest Insights</h2>
             </div>
             <div class="blog-grid">
                 <div class="blog-card">
-                    <img src="https://images.unsplash.com/photo-1563013379-b15a1d6a7b9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CEO of Dhab Construction">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Meet the CEO">
+                    </div>
                     <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">March 21, 2025</span>
+                            <span class="blog-author">By Admin</span>
+                        </div>
                         <h3>Meet the CEO</h3>
-                        <p>Our leadership team brings decades of experience and a vision for transforming South Sudan's infrastructure landscape through innovation and excellence.</p>
-                        <a href="blog.html" class="read-more">Read More</a>
+                        <p>Meet Majuoy Tuak Dhab Bithuok: The Visionary Leader Behind Dhab Construction. At Dhab Construction, we believe that building is more than just erecting structures—it's about creating opportunities...</p>
+                        <button class="read-more">Read More <i class="fas fa-chevron-down"></i></button>
+                        <div class="blog-full-content">
+                            <p>At Dhab Construction, we believe that building is more than just erecting structures—it's about creating opportunities, shaping communities, and leaving a lasting legacy. At the helm of our mission is our CEO, Majuoy Tuak Dhab Bithuok, a passionate and accomplished leader whose journey reflects dedication to excellence and innovation in the construction industry.</p>
+                            <p>Under his leadership, Dhab Construction has grown from a small local contractor to a leading construction company in South Sudan, undertaking prestigious projects that are transforming the nation's infrastructure.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Urban development planning">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Urban Development">
+                    </div>
                     <div class="blog-content">
-                        <h3>Learning from Addis Ababa: A Vision for South Sudan's Urban Development</h3>
-                        <p>Exploring how Ethiopia's capital city development can inform and inspire South Sudan's urban growth strategies.</p>
-                        <a href="blog.html" class="read-more">Read More</a>
+                        <div class="blog-meta">
+                            <span class="blog-date">November 25, 2024</span>
+                            <span class="blog-author">By Admin</span>
+                        </div>
+                        <h3>Learning from Addis Ababa</h3>
+                        <p>The transformation of Addis Ababa through strategic infrastructure development has captured the attention of leaders across Africa, including South Sudan's Minister of Land, Housing, and Urban Development...</p>
+                        <button class="read-more">Read More <i class="fas fa-chevron-down"></i></button>
+                        <div class="blog-full-content">
+                            <p>The transformation of Addis Ababa through strategic infrastructure development has captured the attention of leaders across Africa, including South Sudan's Minister of Land, Housing, and Urban Development, Michael Chanjiek. Speaking during the inaugural Africa Urban Forum held in Addis Ababa from September 4-6, 2024, Minister Chanjiek emphasized the importance of learning from Ethiopia's capital to inform South Sudan's own urban development strategies.</p>
+                            <p>Addis Ababa's rapid transformation offers valuable lessons in urban planning, infrastructure development, and sustainable growth that can be adapted to South Sudan's unique context as the nation works to rebuild and develop its cities.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <a href="blog.html" class="primary-button">See Our Blog</a>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="blog.html" class="btn">See Our Blog</a>
             </div>
         </div>
     </section>
 
     <!-- Invest Section -->
-    <section class="invest-preview section-padding" style="background-image: url('https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <section class="invest">
         <div class="container">
             <div class="invest-content">
-                <h2>Invest in Dhab Construction: Build Your Future With Us</h2>
-                <p>Join us in shaping South Sudan's real estate and infrastructure boom. Our strategic projects offer excellent returns and contribute to nation-building.</p>
-                <a href="invest.html" class="cta-button">Invest Your Future</a>
+                <div class="section-title">
+                    <h2>Invest in Dhab Construction</h2>
+                </div>
+                <p>We are inviting forward-thinking investors to join us in shaping the future of South Sudan's booming construction and real estate market. By purchasing shares in our company, you're not only investing in a trusted name with 120+ years of combined industry experience but also in a future filled with growth, innovation, and unparalleled opportunities.</p>
+                <a href="invest.html" class="btn">Invest Your Future</a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-preview section-padding">
+    <section class="contact">
         <div class="container">
-            <div class="contact-content">
-                <img src="https://images.unsplash.com/photo-1521618755572-485a084e4364?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dhab Construction office in Juba">
-                <div class="contact-text">
-                    <h2>Let's Build Together</h2>
-                    <p>Ready to start your project? Get in touch with us today.</p>
-                    <a href="contact.html" class="secondary-button">Contact Us</a>
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h3>Our Location</h3>
+                                <p>Dynasty House, 1st Floor, Bilpam Road, Juba, South Sudan</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3>Phone Number</h3>
+                                <p>+211 917 119 426</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3>Email Address</h3>
+                                <p>info@dhabconstruction.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer>
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-container">
                 <div class="footer-about">
-                    <h3>DHAB CONSTRUCTION</h3>
-                    <p class="tagline">Your Partner in Infrastructural Development.</p>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Dynasty House, 1st Floor, Bilpam Road, Juba, South Sudan</p>
-                    <p><i class="fas fa-phone"></i> +211 917 119 426</p>
-                    <p><i class="fas fa-envelope"></i> info@dhabconstruction.com</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h4>Follow Us</h4>
-                    <div class="social-icons">
+                    <div class="footer-logo">Dhab<span>Construction</span></div>
+                    <p>Your trusted partner in infrastructural development across South Sudan and Eastern Africa. We build lasting structures that empower communities and drive progress.</p>
+                    <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
+                <div class="footer-links">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="invest.html">Invest</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Dynasty House, 1st Floor, Bilpam Road, Juba, South Sudan</p>
+                    <p><i class="fas fa-phone"></i> +211 917 119 426</p>
+                    <p><i class="fas fa-envelope"></i> info@dhabconstruction.com</p>
+                </div>
             </div>
             <div class="copyright">
-                <p>© 2025 Dhab Construction – All Rights Reserved.</p>
+                <p>&copy; 2025 Dhab Construction. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        // Auto slide change every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Blog Read More Toggle
+        document.querySelectorAll('.read-more').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+                this.classList.toggle('active');
+                
+                if (content.classList.contains('active')) {
+                    this.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+                } else {
+                    this.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+                }
+            });
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
 </body>
 </html>
