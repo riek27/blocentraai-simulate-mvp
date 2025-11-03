@@ -667,6 +667,47 @@
             color: #999;
         }
 
+        /* Mobile Menu Styles */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--white);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+    
+    nav ul.active {
+        right: 0;
+    }
+    
+    nav li {
+        margin: 1.5rem 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    nav a {
+        display: block;
+        padding: 0.5rem 2rem;
+        font-size: 1.1rem;
+        border-bottom: 1px solid var(--light-gray);
+    }
+}
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .about-content {
