@@ -637,3 +637,188 @@ if (isTouchDevice()) {
 } else {
     document.body.classList.add('no-touch-device');
 }
+
+
+// Dhab Construction - Complete JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== MOBILE MENU FUNCTIONALITY =====
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('nav ul');
+    
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+            // Toggle active class on navigation
+            navMenu.classList.toggle('active');
+            
+            // Toggle hamburger icon
+            const icon = this.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                // Restore body scroll when menu is closed
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on nav links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    }
+
+    // ===== HERO SLIDER =====
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(n) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlide = (n + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Auto slide change every 5 seconds (only if slides exist)
+    if (slides.length > 0) {
+        setInterval(nextSlide, 5000);
+    }
+
+    // ===== BLOG READ MORE TOGGLE =====
+    document.querySelectorAll('.read-more').forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            content.classList.toggle('active');
+            this.classList.toggle('active');
+            
+            if (content.classList.contains('active')) {
+                this.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+            } else {
+                this.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+            }
+        });
+    });
+
+    // ===== CONTACT FORM SUBMISSION =====
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple form validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#e74c3c';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Clear error styles on input
+        contactForm.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        });
+    }
+
+    // ===== HEADER SCROLL EFFECT =====
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (header) {
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        }
+    });
+
+    // ===== CLOSE MOBILE MENU ON RESIZE =====
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navMenu) {
+            navMenu.classList.remove('active');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            }
+            document.body.style.overflow = '';
+        }
+    });
+
+    // ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's just "#" or empty
+            if (href === '#' || href === '') {
+                return;
+            }
+            
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // ===== ADD LOADING ANIMATION TO ELEMENTS =====
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.querySelectorAll('.service-card, .portfolio-item, .blog-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+});
