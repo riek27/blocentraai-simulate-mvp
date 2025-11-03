@@ -167,3 +167,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start the initialization
     init();
 });
+
+// Services Page Accordion Functionality
+function initServicesAccordion() {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        
+        header.addEventListener('click', () => {
+            // Toggle active class on clicked item
+            item.classList.toggle('active');
+            
+            // Close other items if needed
+            accordionItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+        });
+    });
+}
+
+// Initialize services page specific functionality
+function initServicesPage() {
+    initServicesAccordion();
+}
+
+// Check if we're on the services page and initialize
+if (window.location.pathname.includes('services.html') || window.location.pathname.includes('/services')) {
+    document.addEventListener('DOMContentLoaded', initServicesPage);
+}
